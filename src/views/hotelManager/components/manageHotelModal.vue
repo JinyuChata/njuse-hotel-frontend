@@ -84,6 +84,7 @@
                         </span>
             </a-form-item>
         </a-form>
+<!--        {{record}}-->
     </a-modal>
 </template>
 <script>
@@ -91,6 +92,20 @@
 
     export default {
         name: 'manageHotelModal',
+        props: {
+          record:Object,
+        },
+        //
+        // id: 3
+        // name: "桂圆酒店"
+        // address: "南京市栖霞区珠江路268号"
+        // bizRegion: "XiDan"
+        // hotelStar: "Four"
+        // rate: 4.8
+        // description: "欢迎您入住"
+        // phoneNum: "1829553719"
+        // managerId: 6
+        // rooms: null
         data() {
             return {
                 formItemLayout: {

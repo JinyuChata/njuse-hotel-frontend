@@ -67,71 +67,71 @@
                     </span>
                 </a-table>
             </a-tab-pane>
-            <a-tab-pane tab="维护酒店基本信息">
-                <a-form>
-                    <a-form-item label="酒店名称" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">
-                        <span> 酒店名称的数据 不可改</span>
-                    </a-form-item>
-                    <a-form-item label="酒店地址" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">
-                        <a-input
-                                placeholder="请填写酒店地址"
-                                v-decorator="['address' ]"
-                                v-if="true"
-                        />
-                        <span v-else>
-                            {{}}
-                        </span>
-                    </a-form-item>
-                    <a-form-item label="所属商圈" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">
-                        <a-input
-                                placeholder="请填写酒店所属商圈"
-                                v-decorator="['' ]"
-                                v-if="true"
-                        />
-                        <span v-else>
-                            {{}}
-                        </span>
-                    </a-form-item>
-                    <a-form-item label="酒店星级" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">
-                        <a-input
-                                placeholder="请填写酒店地址"
-                                v-decorator="['address' ]"
-                                v-if="true"
-                        />
-                        <span v-else>
-                            {{}}
-                        </span>
-                    </a-form-item>
-                    <a-form-item label="酒店评分" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">
-                        <span>酒店评分的数据 不可改</span>
-                    </a-form-item>
-                    <a-form-item label="酒店电话" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">
-                        <a-input
-                                placeholder="请填写酒店地址"
-                                v-decorator="['address' ]"
-                                v-if="true"
-                        />
-                        <span v-else>
-                            {{}}
-                        </span>
-                    </a-form-item>
-                    <a-form-item label="酒店描述" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">
-                        <a-textarea
-                                placeholder="请填写酒店描述"
-                                v-decorator="['address' ]"
-                                v-if="true"
-                        />
-                        <span v-else>
-                            {{}}
-                        </span>
-                    </a-form-item>
-                </a-form>
-            </a-tab-pane>
+<!--            <a-tab-pane tab="维护酒店基本信息">-->
+<!--                <a-form>-->
+<!--                    <a-form-item label="酒店名称" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">-->
+<!--                        <span> 酒店名称的数据 不可改</span>-->
+<!--                    </a-form-item>-->
+<!--                    <a-form-item label="酒店地址" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">-->
+<!--                        <a-input-->
+<!--                                placeholder="请填写酒店地址"-->
+<!--                                v-decorator="['address' ]"-->
+<!--                                v-if="true"-->
+<!--                        />-->
+<!--                        <span v-else>-->
+<!--                            {{}}-->
+<!--                        </span>-->
+<!--                    </a-form-item>-->
+<!--                    <a-form-item label="所属商圈" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">-->
+<!--                        <a-input-->
+<!--                                placeholder="请填写酒店所属商圈"-->
+<!--                                v-decorator="['' ]"-->
+<!--                                v-if="true"-->
+<!--                        />-->
+<!--                        <span v-else>-->
+<!--                            {{}}-->
+<!--                        </span>-->
+<!--                    </a-form-item>-->
+<!--                    <a-form-item label="酒店星级" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">-->
+<!--                        <a-input-->
+<!--                                placeholder="请填写酒店地址"-->
+<!--                                v-decorator="['address' ]"-->
+<!--                                v-if="true"-->
+<!--                        />-->
+<!--                        <span v-else>-->
+<!--                            {{}}-->
+<!--                        </span>-->
+<!--                    </a-form-item>-->
+<!--                    <a-form-item label="酒店评分" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">-->
+<!--                        <span>酒店评分的数据 不可改</span>-->
+<!--                    </a-form-item>-->
+<!--                    <a-form-item label="酒店电话" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">-->
+<!--                        <a-input-->
+<!--                                placeholder="请填写酒店地址"-->
+<!--                                v-decorator="['address' ]"-->
+<!--                                v-if="true"-->
+<!--                        />-->
+<!--                        <span v-else>-->
+<!--                            {{}}-->
+<!--                        </span>-->
+<!--                    </a-form-item>-->
+<!--                    <a-form-item label="酒店描述" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">-->
+<!--                        <a-textarea-->
+<!--                                placeholder="请填写酒店描述"-->
+<!--                                v-decorator="['address' ]"-->
+<!--                                v-if="true"-->
+<!--                        />-->
+<!--                        <span v-else>-->
+<!--                            {{}}-->
+<!--                        </span>-->
+<!--                    </a-form-item>-->
+<!--                </a-form>-->
+<!--            </a-tab-pane>-->
         </a-tabs>
         <AddHotelModal></AddHotelModal>
         <AddRoomModal></AddRoomModal>
         <Coupon></Coupon>
-        <ManageHotelModal></ManageHotelModal>
+        <ManageHotelModal :record="clickedRecord"></ManageHotelModal>
     </div>
 </template>
 <script>
@@ -225,6 +225,7 @@
                 columns1,
                 columns2,
                 form: this.$form.createForm(this, {name: 'manageHotel'}),
+                clickedRecord:{},
             }
         },
         components: {
@@ -280,7 +281,8 @@
                 this.getHotelCoupon()
             },
             manageHotel(record) {
-                console.log(record)
+                this.clickedRecord=record;
+                // console.log(record)
                 this.set_activeHotelId(record.id)
                 this.set_manageHotelVisible(true)
             },

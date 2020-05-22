@@ -2,23 +2,37 @@
     <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData">
         <div slot="footer">from <b>NJU-SE</b> hotel search</div>
         <a-list-item slot="renderItem" key="item.title" slot-scope="item">
-            <template v-for="{ type, text } in actions" slot="actions">
-                <span :key="type">
-                  <a-icon :type="type" style="margin-right: 8px"/>
-                  {{ text }}
+            <template slot="actions">
+              <span :key="star">
+                        <a-icon type="star" style="margin-right: 8px"/>
+                      {{ item.hotelStar }}
+                    </span>
+                <span :key="like-o">
+                      <a-icon type="like-o" style="margin-right: 8px" />
+                      {{ item.rate }}
+                    </span>
+                <span :key="tag" v-if="item.isOrdered">
+                      <a-icon type="tag" style="margin-right: 8px" />
+                       "曾经预定过"
                 </span>
+
             </template>
+
             <img
                     slot="extra"
                     width="272"
+                    height="190"
+                    style="border-radius:12px"
                     alt="logo"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                    :src="item.hotelPic"
             />
-            <a-list-item-meta :description="item.description">
-                <a slot="title" :href="item.href">{{ item.title }}</a>
+<!--            先限制一下，等到之后再处理拉伸变形问题-->
+            <a-list-item-meta :description="'地址:'+item.address+' 商圈:'+item.bizRegion">
+                <a slot="title" :href="item.href">{{ item.name }}</a>
                 <!--                <a-avatar slot="avatar" :src="item.avatar"/>-->
             </a-list-item-meta>
-            {{ item.content }}
+            {{ item.description }}
+<!--            <h4 >{{item.lowestprice}}</h4>-->
         </a-list-item>
     </a-list>
 </template>
@@ -26,16 +40,29 @@
     const listData = [];
     for (let i = 0; i < 23; i++) {
         listData.push({
-            href: 'https://www.antdv.com/',
-            title: `ant design vue part ${i}`,
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+            id: 1,
+            name: `酒店名称 酒店${i}`,
+            address: '酒店地址',
+            bizRegion:'商圈所在',
+            hotelStar: 5,
+            rate: 4.7,
             description:
-                'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-            content:
-                'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+                '酒店的简介，服务，等介绍',
+            phoneNum:"13333217870",
+            hotelPic: 'https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png',//目前没有
+            lowestprice:200,//目前没有
+            isOrdered: true,//目前没有
         });
     }
-
+    //Integer id;
+    //  String name;
+    // String address;
+    // String bizRegion;
+    // String hotelStar;
+    // Double rate;
+    // String description;
+    // String phoneNum;
+    //Integer managerId;
     export default {
         data() {
             return {
@@ -46,11 +73,7 @@
                     },
                     pageSize: 7,
                 },
-                actions: [
-                    {type: 'star-o', text: '156'},
-                    {type: 'like-o', text: '156'},
-                    {type: 'message', text: '2'},
-                ],
+
             };
         },
     };

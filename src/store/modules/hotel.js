@@ -3,6 +3,7 @@ import store from '@/store'
 import {
     getHotelsAPI,
     getHotelByIdAPI,
+    submitHotelSearchParamsAPI,
     //
     // getUserCommentAPI
 } from '@/api/hotel'
@@ -33,6 +34,8 @@ const hotel = {
 
         },
         orderMatchCouponList: [
+        ],
+        searchedHotelList:[
         ],
         // //添加用户评论！！！
         // userComment:[],
@@ -71,6 +74,10 @@ const hotel = {
         set_orderMatchCouponList: function(state, data) {
             state.orderMatchCouponList = data
         },
+        //搜索酒店后的设置
+        set_searchedHotelList:function (state,data) {
+            state.searchedHotelList=data
+        }
     //    添加用户评论
     //     set_userComment: function (state,data) {
     //         state.userComment=data.data;
@@ -116,6 +123,30 @@ const hotel = {
                 commit('set_orderMatchCouponList', res)
             }
         },
+        submitHotelSearchParams:async({ state, commit }, data) =>{
+            console.log(data)
+            const res=await submitHotelSearchParamsAPI(data)
+            if(res){
+                commit('set_searchedHotelList',res)
+            }else {
+                console.log("搜索失败")
+            //    错误信息以后再说
+            }
+        }
+        // addHotelCoupon: async({ commit, dispatch }, data) => {
+        //     // console.log(data);
+        //     const res = await hotelTargetMoneyAPI(data);
+        //     if(res){
+        //         // 添加成功后的操作（提示文案、modal框显示与关闭，调用优惠列表策略等）
+        //         dispatch('getHotelCoupon');
+        //         commit('set_addCouponVisible', false);
+        //         commit('set_couponVisible',true);
+        //         message.success('添加策略成功');
+        //     }else{
+        //         // 添加失败后的操作
+        //         message.error('添加失败');
+        //     }
+        // },
         // bindManager: async({ state, commit }, data) => {
         //     const res = await orderMatchCouponsAPI(data)
         //     if(res){
