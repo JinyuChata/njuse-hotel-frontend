@@ -10,7 +10,7 @@
         <a-form :form="form" style="margin-top: 30px" v-bind="formItemLayout">
             <a-form-item label="酒店名称">
                 <a-input
-                        placeholder="请填写酒店名称"
+                        placeholder="record.name"
                         v-decorator="['name', {
                             rules: [
                                 { required: true, message: 'Please input the name' }

@@ -111,7 +111,7 @@ const hotel = {
         //
         addOrder: async({ state, commit }, data) => {
             const res = await reserveHotelAPI(data)
-            console.log(res)
+            // console.log(res)
             if(res){
                 message.success('预定成功')
                 commit('set_orderModalVisible', false)
@@ -124,7 +124,7 @@ const hotel = {
             }
         },
         submitHotelSearchParams:async({ state, commit }, data) =>{
-            console.log(data)
+            // console.log(data)
             const res=await submitHotelSearchParamsAPI(data)
             if(res){
                 commit('set_searchedHotelList',res)

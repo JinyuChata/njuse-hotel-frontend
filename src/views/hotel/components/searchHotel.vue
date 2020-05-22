@@ -10,14 +10,14 @@
                     <a-form-item  label="城市">
                         <a-cascader
                                 v-decorator="[
-          'residence',
-          {
-            initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-            rules: [
-              { type: 'array', required: true, message: 'Please select your habitual residence!' },
-            ],
-          },
-        ]"
+                          'address',
+                          {
+                            // initialValue: ['zhejiang', 'hangzhou', 'xihu'],
+                            rules: [
+                              { type: 'array', required: true, message: 'Please select your habitual residence!' },
+                            ],
+                          },
+                        ]"
                                 :options="residences"
                         />
                     </a-form-item>
@@ -29,17 +29,17 @@
                     <a-form-item :label="`间数`">
                         <a-input
                                 v-decorator="[
-                `rooms`,
+                'roomDemandCnt',
                 {
                   rules: [
                     {
                       required: true,
-                      message: 'Input something!',
+                      message: '请选择预定房间数',
                     },
                   ],
                 },
               ]"
-                                placeholder="placeholder"
+                                placeholder="房间数"
                         />
                     </a-form-item>
                 </a-col>
@@ -47,18 +47,31 @@
                         :span="9"
                         :style="{ display: 0 < count ? 'block' : 'none'}"
                 >
-                    <a-form-item :label="`入住退房日期`" style="margin-bottom:0;">
-                        <a-form-item
-                                :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"
-                        >
-                            <a-date-picker style="width: 100%"/>
-                        </a-form-item>
-                        <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">
-        -
-      </span>
-                        <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }">
-                            <a-date-picker style="width: 100%"/>
-                        </a-form-item>
+<!--                    <a-form-item :label="`入住退房日期`" style="margin-bottom:0;">-->
+<!--                        <a-form-item-->
+<!--                                :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"-->
+<!--                        >-->
+<!--                            <a-date-picker style="width: 100%"/>-->
+<!--                        </a-form-item>-->
+<!--                        <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">-->
+<!--            - -->
+<!--                      </span>-->
+<!--                        <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }">-->
+<!--                            <a-date-picker style="width: 100%"/>-->
+<!--                        </a-form-item>-->
+<!--                    </a-form-item>-->
+                    <a-form-item label="入住时间" v-bind="formItemLayout" style="margin-left: 40px">
+                        <a-range-picker @change="selectedDate"
+                                        v-decorator="[
+                          'roomdate',
+                          {
+                            rules: [
+                              {  required: true },
+                            ],
+                          },
+                        ]">
+                            <a-icon slot="suffixIcon" type="calendar" />
+                        </a-range-picker>
                     </a-form-item>
                 </a-col>
             </a-row>
@@ -70,14 +83,16 @@
                 >
                     <a-form-item :label="`价格区间`" style="margin-bottom:0;">
                         <a-input
-                                placeholder="placeholder"
+                                placeholder="最低"
+                                v-decorator="['lowerPrice']"
                                 :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"
                         />
                         <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">
         -
-      </span>
+                       </span>
                         <a-input
-                                placeholder="placeholder"
+                                v-decorator="['higherPrice']"
+                                placeholder="最高"
                                 :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"
                         />
                     </a-form-item>
@@ -88,25 +103,27 @@
                 >
                     <a-form-item :label="`评分区间`" style="margin-bottom:0;">
                         <a-input
-                                placeholder="placeholder"
+                                placeholder="最低"
+                                v-decorator="['lowerRate']"
                                 :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"
                         />
                         <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">
         -
-      </span>
+                      </span>
                         <a-input
-                                placeholder="placeholder"
+                                placeholder="最高"
+                                v-decorator="['higherRate']"
                                 :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"
                         />
                     </a-form-item>
                 </a-col>
                 <a-col :span="8">
                     <a-form-item label="筛选已预订酒店">
-                        <a-radio-group v-model="isOrdered" v-decorator="['radio-button']">
-                            <a-radio-button value="true">
+                        <a-radio-group v-decorator="['radio-button']">
+                            <a-radio-button value="a">
                                 预订过酒店
                             </a-radio-button>
-                            <a-radio-button value="false">
+                            <a-radio-button value="b">
                                 显示全部酒店
                             </a-radio-button>
                         </a-radio-group>
@@ -154,29 +171,29 @@
                         </a-checkbox-group>
                     </a-form-item>
                 </a-col>
-                <a-col
-                        :span="9"
-                        :style="{ display: 0 < count ? 'block' : 'none'}"
-                >
-                    <a-form-item :label="`价格区间`" style="margin-bottom:0;">
-                        <a-input
-                                placeholder="placeholder"
-                                :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"
-                        />
-                        <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">
-        -
-      </span>
-                        <a-input
-                                placeholder="placeholder"
-                                :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"
-                        />
-                    </a-form-item>
-                </a-col>
-                <a-col :span="1"></a-col>
+<!--                <a-col-->
+<!--                        :span="9"-->
+<!--                        :style="{ display: 0 < count ? 'block' : 'none'}"-->
+<!--                >-->
+<!--                    <a-form-item :label="`价格区间`" style="margin-bottom:0;">-->
+<!--                        <a-input-->
+<!--                                placeholder="placeholder"-->
+<!--                                :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"-->
+<!--                        />-->
+<!--                        <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">-->
+<!--        - -->
+<!--      </span>-->
+<!--                        <a-input-->
+<!--                                placeholder="placeholder"-->
+<!--                                :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"-->
+<!--                        />-->
+<!--                    </a-form-item>-->
+<!--                </a-col>-->
+            <a-col :span="1"></a-col>
             </a-row>
             <a-row>
                 <a-col :span="23" :style="{ textAlign: 'right' }">
-                    <a-button type="primary" html-type="submit">
+                    <a-button type="primary" html-type="submit" >
                         确定
                     </a-button>
                     <a-button :style="{ marginLeft: '8px' }" @click="handleReset">
@@ -265,6 +282,7 @@
 </template>
 <script>
     import hotelList from "./hotelListForSearch";
+    import { mapGetters, mapMutations, mapActions } from 'vuex'
 
     const residences = [
         {
@@ -284,16 +302,13 @@
             ],
         },
         {
-            // 省
             value: 'jiangsu',
             label: 'Jiangsu',
             children: [
-                // 市
                 {
                     value: 'nanjing',
                     label: 'Nanjing',
                     children: [
-                        // 商圈
                         {
                             value: 'zhonghuamen',
                             label: 'Zhong Hua Men',
@@ -310,7 +325,6 @@
         },
         data() {
             return {
-                isOrdered: false,
                 sort: {
                     // up down none
                     comment: 'none',
@@ -320,7 +334,9 @@
                 current: ['mail'],
                 expand: false,
                 form: this.$form.createForm(this, {name: 'advanced_search'}),
-                residences
+                residences,
+                roomdate:Array,
+                stars:Array,
             };
         },
         computed: {
@@ -342,6 +358,20 @@
             console.log('updated');
         },
         methods: {
+            ...mapMutations([
+                // mutations  this.$store.commit(xxx) mapMutations
+                'set_searchedHotelList'
+            ]),
+            //通过排序直接修改state里面的数据从而完成排序显示
+            ...mapActions([
+                // addHotelCoupon：添加酒店策略接口
+                //actions this.$store.dispatch(xxx)    mapActions
+                'submitHotelSearchParams'
+            ]),
+            selectedDate(date, dateString){
+                this.roomdate=dateString;
+            },
+            //上面是获取一下选择的日期
             onSortComment(actionProp) {
                 this.sort.comment = actionProp;
             },
@@ -351,19 +381,42 @@
             onSortStar(actionProp) {
                 this.sort.star = actionProp;
             },
-
+            //排序先搁置
             handleSearch(e) {
                 e.preventDefault();
                 this.form.validateFields((error, values) => {
-                    console.log('error', error);
-                    console.log('Received values of form: ', values);
+                    // console.log('error', error);
+                    if (!error) {
+                        const data = {
+                            address: {
+                                province:this.form.getFieldValue('address')[0],
+                                city:this.form.getFieldValue('address')[1],
+                                bizRegion:this.form.getFieldValue('address')[1],
+                            },
+                            roomDemandCnt: this.form.getFieldValue('roomDemandCnt'),
+                            beginDate:this.roomdate[0],
+                            endDate:this.roomdate[1],
+                            lowerPrice: this.form.getFieldValue('lowerPrice')==""? null:this.form.getFieldValue('lowerPrice'),
+                            higherPrice: this.form.getFieldValue('higherPrice')==""? null: this.form.getFieldValue('higherPrice'),
+                            lowerRate:this.form.getFieldValue('lowerRate')==""?null:this.form.getFieldValue('lowerRate'),
+                            higherRate:this.form.getFieldValue('higherRate')==""?null:this.form.getFieldValue('higherRate'),
+                            stars:this.form.getFieldValue('checkbox-group'),
+                        }
+                        this.submitHotelSearchParams(data)
+                        // console.log(data)
+                        //在modules/hotel.js里面添加一个submitHotelSearchParams(data)
+                        //api/hotel.js里面对应着会有一个submitHotelSearchParamsAPI(data)
+                        //modules/hotel.js 里面set_searchedHotelList// 同时添加了一个 searchedHotelList
+                        //getter里面有一条getter
+
+                        // console.log('Received values of form: ', values);
+                    }
+
                 });
             },
-
             handleReset() {
                 this.form.resetFields();
             },
-
             toggle() {
                 this.expand = !this.expand;
             },
