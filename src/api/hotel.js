@@ -24,6 +24,7 @@ export function managedOrdersAPI(id) {
 
 //发送酒店搜索的请求
 export function submitHotelSearchParamsAPI(params){
+    console.log(params)
     return axios({
         url: `${api.hotelPre}/hotel_search/detail`,
         method: 'POST',
