@@ -10,7 +10,7 @@
         <a-form :form="form" style="margin-top: 30px" v-bind="formItemLayout">
             <a-form-item label="酒店名称">
                 <a-input
-                        placeholder="record.name"
+                        :placeholder="record.name"
                         v-decorator="['name', {
                             rules: [
                                 { required: true, message: 'Please input the name' }
@@ -24,6 +24,7 @@
             </a-form-item>
             <a-form-item v-bind="formItemLayout" label="地址商圈">
                 <a-cascader
+                        :placeholder="record.address"
                         v-decorator="[
           'address',
           {
@@ -75,7 +76,7 @@
             </a-form-item>
             <a-form-item label="酒店描述">
                 <a-textarea
-                        placeholder="请填写酒店描述"
+                        :placeholder="record.description"
                         v-decorator="['desc' ]"
                         v-if="true"
                 />
@@ -154,7 +155,11 @@
                         const data = {
                             name: this.form.getFieldValue('name'),
                             description: this.form.getFieldValue('desc'),
-                            address: this.form.getFieldValue('address'),
+                            address: {
+                                province:this.form.getFieldValue('address')[0],
+                                city:this.form.getFieldValue('address')[1],
+                                bizRegion:this.form.getFieldValue('address')[2],
+                            },
                             phoneNum: this.form.getFieldValue('phonenum'),
                             hotelStar: this.form.getFieldValue('star')
                         }

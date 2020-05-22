@@ -381,7 +381,7 @@
             onSortStar(actionProp) {
                 this.sort.star = actionProp;
             },
-            //排序先搁置
+            //排序先搁置：：目前既然酒店列表仅用来显示在这里，直接改变酒店state的数据就可！！
             handleSearch(e) {
                 e.preventDefault();
                 this.form.validateFields((error, values) => {
@@ -391,7 +391,7 @@
                             address: {
                                 province:this.form.getFieldValue('address')[0],
                                 city:this.form.getFieldValue('address')[1],
-                                bizRegion:this.form.getFieldValue('address')[1],
+                                bizRegion:this.form.getFieldValue('address')[2],
                             },
                             roomDemandCnt: this.form.getFieldValue('roomDemandCnt'),
                             beginDate:this.roomdate[0],

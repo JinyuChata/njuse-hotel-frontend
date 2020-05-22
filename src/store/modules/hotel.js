@@ -33,10 +33,13 @@ const hotel = {
         currentOrderRoom: {
 
         },
+
         orderMatchCouponList: [
         ],
+        //下面三个是酒店列表使用的
         searchedHotelList:[
         ],
+        residences:[],//暂且先扔到这里，设置酒店位置也要用
         // //添加用户评论！！！
         // userComment:[],
     },
