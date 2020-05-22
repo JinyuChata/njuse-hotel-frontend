@@ -284,41 +284,6 @@
     import hotelList from "./hotelListForSearch";
     import { mapGetters, mapMutations, mapActions } from 'vuex'
 
-    const residences = [
-        {
-            value: 'zhejiang',
-            label: 'Zhejiang',
-            children: [
-                {
-                    value: 'hangzhou',
-                    label: 'Hangzhou',
-                    children: [
-                        {
-                            value: 'xihu',
-                            label: 'West Lake',
-                        },
-                    ],
-                },
-            ],
-        },
-        {
-            value: 'jiangsu',
-            label: 'Jiangsu',
-            children: [
-                {
-                    value: 'nanjing',
-                    label: 'Nanjing',
-                    children: [
-                        {
-                            value: 'zhonghuamen',
-                            label: 'Zhong Hua Men',
-                        },
-                    ],
-                },
-            ],
-        },
-    ];
-
     export default {
         components: {
             hotelList
@@ -334,13 +299,15 @@
                 current: ['mail'],
                 expand: false,
                 form: this.$form.createForm(this, {name: 'advanced_search'}),
-                residences,
                 roomdate:Array,
                 stars:Array,
                 isOrdered:false,
             };
         },
         computed: {
+            ...mapGetters([
+                'residences'
+            ]),
             sortIcon() {
                 return {
                     comment: this.sort.comment === 'none' ? 'like' : ('caret-'+this.sort.comment),
@@ -355,6 +322,10 @@
                 return this.expand ? 10 : 2;
             },
         },
+
+        mounted() {
+            this.getResidences()
+        },
         updated() {
             console.log('updated');
         },
@@ -367,7 +338,8 @@
             ...mapActions([
                 // addHotelCoupon：添加酒店策略接口
                 //actions this.$store.dispatch(xxx)    mapActions
-                'submitHotelSearchParams'
+                'submitHotelSearchParams',
+                'getResidences'
             ]),
             selectedDate(date, dateString){
                 this.roomdate=dateString;

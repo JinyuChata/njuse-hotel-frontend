@@ -127,7 +127,7 @@ const hotel = {
             }
         },
         submitHotelSearchParams:async({ state, commit }, data) =>{
-            // console.log(data)
+            console.log(data)
             const res=await submitHotelSearchParamsAPI(data)
             if(res){
                 commit('set_searchedHotelList',res)
