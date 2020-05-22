@@ -27,7 +27,7 @@
                         v-decorator="[
           'address',
           {
-            initialValue: ['zhejiang', 'hangzhou', 'xihu'],
+            // initialValue: ['zhejiang', 'hangzhou', 'xihu'],
             rules: [
               { type: 'array', required: true, message: 'Please select your habitual residence!' },
             ],

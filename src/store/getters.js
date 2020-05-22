@@ -10,7 +10,7 @@ const getters = {
   hotelList: state => state.hotel.hotelList,
   //搜索后酒店列表
   searchedHotelList:state =>state.hotel.searchedHotelList,
-
+  manageHotelVisible:state=>state.hotelManager.manageHotelVisible,
   currentHotelInfo: state => state.hotel.currentHotelInfo,
   currentHotelId: state => state.hotel.currentHotelId,
   orderModalVisible: state => state.hotel.orderModalVisible,
