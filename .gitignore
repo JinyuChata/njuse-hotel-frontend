@@ -1,2 +1,13 @@
 node_modules/*
-.idea/*
+
+.DS_Store
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+
+*.iml
+*.ipr
+*.iws
+.idea/
+out/
