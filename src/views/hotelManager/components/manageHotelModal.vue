@@ -43,19 +43,19 @@
                         required: true
                     } ]
                 }]">
-                    <a-radio-button value="a">
+                    <a-radio-button value="One">
                         一星
                     </a-radio-button>
-                    <a-radio-button value="b">
+                    <a-radio-button value="Two">
                         二星
                     </a-radio-button>
-                    <a-radio-button value="c">
+                    <a-radio-button value="Three">
                         三星
                     </a-radio-button>
-                    <a-radio-button value="d">
+                    <a-radio-button value="Four">
                         四星
                     </a-radio-button>
-                    <a-radio-button value="e">
+                    <a-radio-button value="Five">
                         五星
                     </a-radio-button>
                 </a-radio-group>

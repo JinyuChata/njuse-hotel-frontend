@@ -120,10 +120,10 @@
                 <a-col :span="8">
                     <a-form-item label="筛选已预订酒店">
                         <a-radio-group v-decorator="['radio-button']">
-                            <a-radio-button value="a">
+                            <a-radio-button value="a" @click="handleOrderd">
                                 预订过酒店
                             </a-radio-button>
-                            <a-radio-button value="b">
+                            <a-radio-button value="b" @click="handleAll">
                                 显示全部酒店
                             </a-radio-button>
                         </a-radio-group>
@@ -138,32 +138,32 @@
                 >
                     <a-form-item :label="` 星级`">
                         <a-checkbox-group
-                                v-decorator="['checkbox-group', { initialValue: ['A', 'B'] }]"
+                                v-decorator="['checkbox-group', { initialValue: ['Five', 'Four'] }]"
                                 style="width: 100%; display: inline-block; padding-top: 10px"
                         >
                             <a-row>
                                 <a-col :span="5">
-                                    <a-checkbox value="A">
+                                    <a-checkbox value="Five">
                                         五星级
                                     </a-checkbox>
                                 </a-col>
                                 <a-col :span="5">
-                                    <a-checkbox value="B">
+                                    <a-checkbox value="Four">
                                         四星级
                                     </a-checkbox>
                                 </a-col>
                                 <a-col :span="5">
-                                    <a-checkbox value="C">
+                                    <a-checkbox value="Three">
                                         三星级
                                     </a-checkbox>
                                 </a-col>
                                 <a-col :span="5">
-                                    <a-checkbox value="D">
+                                    <a-checkbox value="Tow">
                                         二星级
                                     </a-checkbox>
                                 </a-col>
                                 <a-col :span="4">
-                                    <a-checkbox value="E">
+                                    <a-checkbox value="One">
                                         一星级
                                     </a-checkbox>
                                 </a-col>
@@ -337,6 +337,7 @@
                 residences,
                 roomdate:Array,
                 stars:Array,
+                isOrdered:false,
             };
         },
         computed: {
@@ -381,6 +382,12 @@
             onSortStar(actionProp) {
                 this.sort.star = actionProp;
             },
+            handleOrderd(){
+                this.isOrdered=true;
+            },
+            handleAll(){
+                this.isOrdered=false;
+            },
             //排序先搁置：：目前既然酒店列表仅用来显示在这里，直接改变酒店state的数据就可！！
             handleSearch(e) {
                 e.preventDefault();
@@ -401,9 +408,10 @@
                             lowerRate:this.form.getFieldValue('lowerRate')==""?null:this.form.getFieldValue('lowerRate'),
                             higherRate:this.form.getFieldValue('higherRate')==""?null:this.form.getFieldValue('higherRate'),
                             stars:this.form.getFieldValue('checkbox-group'),
+                            isOrdered:this.isOrdered,
                         }
                         this.submitHotelSearchParams(data)
-                        // console.log(data)
+                        console.log(data)
                         //在modules/hotel.js里面添加一个submitHotelSearchParams(data)
                         //api/hotel.js里面对应着会有一个submitHotelSearchParamsAPI(data)
                         //modules/hotel.js 里面set_searchedHotelList// 同时添加了一个 searchedHotelList
