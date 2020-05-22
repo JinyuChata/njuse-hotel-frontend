@@ -102,11 +102,11 @@
                 </a-col>
                 <a-col :span="8">
                     <a-form-item label="筛选已预订酒店">
-                        <a-radio-group v-decorator="['radio-button']">
-                            <a-radio-button value="a">
+                        <a-radio-group v-model="isOrdered" v-decorator="['radio-button']">
+                            <a-radio-button value="true">
                                 预订过酒店
                             </a-radio-button>
-                            <a-radio-button value="b">
+                            <a-radio-button value="false">
                                 显示全部酒店
                             </a-radio-button>
                         </a-radio-group>
@@ -284,13 +284,16 @@
             ],
         },
         {
+            // 省
             value: 'jiangsu',
             label: 'Jiangsu',
             children: [
+                // 市
                 {
                     value: 'nanjing',
                     label: 'Nanjing',
                     children: [
+                        // 商圈
                         {
                             value: 'zhonghuamen',
                             label: 'Zhong Hua Men',
@@ -307,6 +310,7 @@
         },
         data() {
             return {
+                isOrdered: false,
                 sort: {
                     // up down none
                     comment: 'none',

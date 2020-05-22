@@ -42,6 +42,7 @@ const hotelManager = {
         addRoomModalVisible: false,
         couponVisible: false,
         addCouponVisible: false,
+        manageHotelVisible: false,
         activeHotelId: 0,
         couponList: [],
     },
@@ -84,6 +85,9 @@ const hotelManager = {
         },
         set_addCouponVisible: function(state, data) {
             state.addCouponVisible =data
+        },
+        set_manageHotelVisible: function (state, data) {
+            state.manageHotelVisible = data;
         }
     },
     actions: {
