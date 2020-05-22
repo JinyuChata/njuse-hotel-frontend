@@ -12,7 +12,7 @@
                         />
                         <span v-else>{{ userInfo.userName }}</span>
                     </a-form-item>
-                    <a-form-item label="邮箱" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
+                    <a-form-item label="邮箱号" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
                         <span>{{ userInfo.email }}</span>
                     </a-form-item>
 
@@ -46,15 +46,19 @@
                             取消
                         </a-button>
                     </a-form-item>
-                    <a-form-item :wrapper-col="{ span: 8, offset: 4 }" v-else>
-                        <a-button type="primary" @click="modifyInfo">
+                    <a-form-item :wrapper-col="{ span: 8, offset: 2 }" v-else>
+                        <a type="primary" @click="modifyInfo">
                             修改信息
+
+                        </a>
+                        <a-button type="link" @click="handleRegistere" style="margin-left: 20px">
+                            注册会员
                         </a-button>
                     </a-form-item>
                 </a-form>
-                <a-button type="link" @click="handleRegistere" style="margin-left: 90px">
-                    注册会员
-                </a-button>
+<!--                <a-button type="link" @click="handleRegistere" style="margin-left: 90px">-->
+<!--                    注册会员-->
+<!--                </a-button>-->
             </a-tab-pane>
             <a-tab-pane tab="我的订单" key="2">
                 <a-table
@@ -70,11 +74,11 @@
                         <span v-if="text == 'DoubleBed'">双床房</span>
                         <span v-if="text == 'Family'">家庭房</span>
                     </span>
-                    <a-tag slot="orderState" color="blue" slot-scope="text">
+                    <span slot="orderState" color="blue" slot-scope="text">
                         {{ text }}
-                    </a-tag>
+                    </span>
                     <span slot="action" slot-scope="record">
-                        <a-button type="primary" size="small">查看</a-button>
+                        <a type="primary" size="small">查看</a>
                         <a-divider type="vertical" v-if="record.orderState == '已预订'"></a-divider>
                         <a-popconfirm
                                 title="你确定撤销该笔订单吗？"
@@ -84,7 +88,7 @@
                                 cancelText="取消"
                                 v-if="record.orderState == '已预订'"
                         >
-                            <a-button type="danger" size="small">撤销</a-button>
+                            <a type="danger" size="small">撤销</a>
                         </a-popconfirm>
                     </span>
                 </a-table>
@@ -167,7 +171,7 @@
         },
         {
             title: '状态',
-            filters: [{text: '已预订', value: '已预订'}, {text: '已撤销', value: '已撤销'}, {text: '已入住', value: '已入住'}],
+            filters: [{text: '已预订', value: '已预订'}, {text: '已取消', value: '已取消'}, {text: '已入住', value: '已入住'}],
             onFilter: (value, record) => record.orderState.includes(value),
             dataIndex: 'orderState',
             scopedSlots: {customRender: 'orderState'}
