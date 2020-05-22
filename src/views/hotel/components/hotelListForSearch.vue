@@ -27,7 +27,7 @@
                     :src="item.hotelPic"
             />
 <!--            先限制一下，等到之后再处理拉伸变形问题-->
-            <a-list-item-meta :description="'地址:'+item.address+' 商圈:'+item.bizRegion">
+            <a-list-item-meta :description="'地址:'+item.address+' 商圈:'+item.biz_id">
                 <a slot="title" :href="item.href">{{ item.name }}</a>
                 <!--                <a-avatar slot="avatar" :src="item.avatar"/>-->
             </a-list-item-meta>
@@ -43,7 +43,7 @@
             id: 1,
             name: `酒店名称 酒店${i}`,
             address: '酒店地址',
-            bizRegion:'商圈所在',
+            biz_id:'商圈所在',
             hotelStar: 5,
             rate: 4.7,
             description:

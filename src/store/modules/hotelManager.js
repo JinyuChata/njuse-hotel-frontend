@@ -1,7 +1,8 @@
 import {
     addRoomAPI,
     addHotelAPI,
-    mgrHotelListAPI
+    mgrHotelListAPI,
+    submitManageHotelParamsAPI
 } from '@/api/hotelManager'
 import {
     managedOrdersAPI
@@ -175,6 +176,18 @@ const hotelManager = {
             const res = await managedOrdersAPI(id)
             if(res){
                 commit('set_managedOrders', res)
+            }
+        },
+        //提交酒店维护信息
+        submitManageHotelParams:async({ commit, dispatch }, data) => {
+            console.log(data)
+            const res = await submitManageHotelParamsAPI(data)
+            if(res){//我很好奇请求成功以后会发什么回来？
+                dispatch('getMgrHotelList')//应该是获取所有的酒店
+                commit('set_manageHotelVisible', false);
+                message.success('修改成功')
+            }else {
+                message.error('修改失败');
             }
         },
     }

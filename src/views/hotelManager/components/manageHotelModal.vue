@@ -135,24 +135,22 @@
         },
         methods: {
             ...mapMutations([
-                'set_addHotelParams',
-                'set_addHotelModalVisible',
                 'set_manageHotelVisible'
             ]),
             ...mapActions([
-                'addHotel'
+                'submitManageHotelParams'
             ]),
             cancel() {
                 this.set_manageHotelVisible(false)
             },
             changeStar(v) {
-
             },
             handleSubmit(e) {
                 e.preventDefault();
                 this.form.validateFieldsAndScroll((err, values) => {
                     if (!err) {
                         const data = {
+                            id:this.record.id,
                             name: this.form.getFieldValue('name'),
                             description: this.form.getFieldValue('desc'),
                             address: {
@@ -163,7 +161,9 @@
                             phoneNum: this.form.getFieldValue('phonenum'),
                             hotelStar: this.form.getFieldValue('star')
                         }
-                        console.log(data)
+                        // this.submitHotelSearchParams(data)
+                        this.submitManageHotelParams(data)
+                        //加到hotelmanager里面
                     }
                 });
             },
