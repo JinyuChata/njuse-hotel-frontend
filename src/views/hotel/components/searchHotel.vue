@@ -4,8 +4,7 @@
                 style="padding-top: 30px; padding-bottom: 20px">
             <a-row :gutter="24" :style="{ display: 0 < count ? 'block' : 'none'}">
                 <a-col :span="1"></a-col>
-                <a-col
-                        :span="7"
+                <a-col :span="7"
                 >
                     <a-form-item  label="城市">
                         <a-cascader
@@ -22,8 +21,7 @@
                         />
                     </a-form-item>
                 </a-col>
-                <a-col
-                        :span="6"
+                <a-col :span="7"
                         :style="{ display: 0 < count ? 'block' : 'none'}"
                 >
                     <a-form-item :label="`间数`">
@@ -43,24 +41,10 @@
                         />
                     </a-form-item>
                 </a-col>
-                <a-col
-                        :span="9"
+                <a-col :span="8"
                         :style="{ display: 0 < count ? 'block' : 'none'}"
                 >
-<!--                    <a-form-item :label="`入住退房日期`" style="margin-bottom:0;">-->
-<!--                        <a-form-item-->
-<!--                                :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"-->
-<!--                        >-->
-<!--                            <a-date-picker style="width: 100%"/>-->
-<!--                        </a-form-item>-->
-<!--                        <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">-->
-<!--            - -->
-<!--                      </span>-->
-<!--                        <a-form-item :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }">-->
-<!--                            <a-date-picker style="width: 100%"/>-->
-<!--                        </a-form-item>-->
-<!--                    </a-form-item>-->
-                    <a-form-item label="入住时间" v-bind="formItemLayout" style="margin-left: 40px">
+                    <a-form-item label="入住时间" v-bind="formItemLayout" style="margin-left: 0; margin-right: 5px">
                         <a-range-picker @change="selectedDate"
                                         v-decorator="[
                           'roomdate',
@@ -77,8 +61,7 @@
             </a-row>
             <a-row :gutter="24" :style="{ display: 1 < count ? 'block' : 'none'}">
                 <a-col :span="1"></a-col>
-                <a-col
-                        :span="7"
+                <a-col :span="7"
                         :style="{ display: 0 < count ? 'block' : 'none'}"
                 >
                     <a-form-item :label="`价格区间`" style="margin-bottom:0;">
@@ -97,8 +80,7 @@
                         />
                     </a-form-item>
                 </a-col>
-                <a-col
-                        :span="8"
+                <a-col :span="7"
                         :style="{ display: 0 < count ? 'block' : 'none'}"
                 >
                     <a-form-item :label="`评分区间`" style="margin-bottom:0;">
@@ -133,13 +115,13 @@
             <a-row :gutter="24" :style="{ display: 2 < count ? 'block' : 'none'}">
                 <a-col :span="1"></a-col>
                 <a-col
-                        :span="13"
+                        :span="14"
                         :style="{ display: 0 < count ? 'block' : 'none'}"
                 >
                     <a-form-item :label="` 星级`">
                         <a-checkbox-group
                                 v-decorator="['checkbox-group', { initialValue: ['Five', 'Four'] }]"
-                                style="width: 100%; display: inline-block; padding-top: 10px"
+                                style="width: 100%; display: inline-block; padding-top: 10px; margin-left: 10px"
                         >
                             <a-row>
                                 <a-col :span="5">
@@ -171,24 +153,17 @@
                         </a-checkbox-group>
                     </a-form-item>
                 </a-col>
-<!--                <a-col-->
-<!--                        :span="9"-->
-<!--                        :style="{ display: 0 < count ? 'block' : 'none'}"-->
-<!--                >-->
-<!--                    <a-form-item :label="`价格区间`" style="margin-bottom:0;">-->
-<!--                        <a-input-->
-<!--                                placeholder="placeholder"-->
-<!--                                :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"-->
-<!--                        />-->
-<!--                        <span :style="{ display: 'inline-block', width: '24px', textAlign: 'center' }">-->
-<!--        - -->
-<!--      </span>-->
-<!--                        <a-input-->
-<!--                                placeholder="placeholder"-->
-<!--                                :style="{ display: 'inline-block', width: 'calc(50% - 12px)' }"-->
-<!--                        />-->
-<!--                    </a-form-item>-->
-<!--                </a-col>-->
+                <a-col
+                        :span="8"
+                >
+                    <a-form-item :label="`酒店检索`" style="margin-bottom:0; margin-right: 14px">
+                        <a-input
+                                placeholder="关键字"
+                                style="display: inline-block; margin-left: 10px;"
+                                v-decorator="['hotelKeyWord']"
+                        />
+                    </a-form-item>
+                </a-col>
             <a-col :span="1"></a-col>
             </a-row>
             <a-row>
@@ -284,41 +259,6 @@
     import hotelList from "./hotelListForSearch";
     import { mapGetters, mapMutations, mapActions } from 'vuex'
 
-    const residences = [
-        {
-            value: 'zhejiang',
-            label: 'Zhejiang',
-            children: [
-                {
-                    value: 'hangzhou',
-                    label: 'Hangzhou',
-                    children: [
-                        {
-                            value: 'xihu',
-                            label: 'West Lake',
-                        },
-                    ],
-                },
-            ],
-        },
-        {
-            value: 'jiangsu',
-            label: 'Jiangsu',
-            children: [
-                {
-                    value: 'nanjing',
-                    label: 'Nanjing',
-                    children: [
-                        {
-                            value: 'zhonghuamen',
-                            label: 'Zhong Hua Men',
-                        },
-                    ],
-                },
-            ],
-        },
-    ];
-
     export default {
         components: {
             hotelList
@@ -334,13 +274,15 @@
                 current: ['mail'],
                 expand: false,
                 form: this.$form.createForm(this, {name: 'advanced_search'}),
-                residences,
                 roomdate:Array,
                 stars:Array,
                 isOrdered:false,
             };
         },
         computed: {
+            ...mapGetters([
+                'residences'
+            ]),
             sortIcon() {
                 return {
                     comment: this.sort.comment === 'none' ? 'like' : ('caret-'+this.sort.comment),
@@ -355,6 +297,10 @@
                 return this.expand ? 10 : 2;
             },
         },
+
+        mounted() {
+            this.getResidences()
+        },
         updated() {
             console.log('updated');
         },
@@ -367,7 +313,8 @@
             ...mapActions([
                 // addHotelCoupon：添加酒店策略接口
                 //actions this.$store.dispatch(xxx)    mapActions
-                'submitHotelSearchParams'
+                'submitHotelSearchParams',
+                'getResidences'
             ]),
             selectedDate(date, dateString){
                 this.roomdate=dateString;
@@ -392,32 +339,22 @@
             handleSearch(e) {
                 e.preventDefault();
                 this.form.validateFields((error, values) => {
-                    // console.log('error', error);
                     if (!error) {
                         const data = {
-                            address: {
-                                province:this.form.getFieldValue('address')[0],
-                                city:this.form.getFieldValue('address')[1],
-                                bizRegion:this.form.getFieldValue('address')[2],
-                            },
+                            bizId:this.form.getFieldValue('address')[2],
                             roomDemandCnt: this.form.getFieldValue('roomDemandCnt'),
                             beginDate:this.roomdate[0],
                             endDate:this.roomdate[1],
-                            lowerPrice: this.form.getFieldValue('lowerPrice')==""? null:this.form.getFieldValue('lowerPrice'),
-                            higherPrice: this.form.getFieldValue('higherPrice')==""? null: this.form.getFieldValue('higherPrice'),
-                            lowerRate:this.form.getFieldValue('lowerRate')==""?null:this.form.getFieldValue('lowerRate'),
-                            higherRate:this.form.getFieldValue('higherRate')==""?null:this.form.getFieldValue('higherRate'),
+                            lowerPrice: this.form.getFieldValue('lowerPrice')===""? null:this.form.getFieldValue('lowerPrice'),
+                            upperPrice: this.form.getFieldValue('higherPrice')===""? null: this.form.getFieldValue('higherPrice'),
+                            lowerRate:this.form.getFieldValue('lowerRate')===""?null:this.form.getFieldValue('lowerRate'),
+                            higherRate:this.form.getFieldValue('higherRate')===""?null:this.form.getFieldValue('higherRate'),
                             stars:this.form.getFieldValue('checkbox-group'),
+                            hotelNameKeyWord: this.form.getFieldValue('hotelKeyWord')===""?null:this.form.getFieldValue('hotelKeyWord'),
                             isOrdered:this.isOrdered,
                         }
+                        console.log(this.form.getFieldValue('hotelKeyWord'))
                         this.submitHotelSearchParams(data)
-                        console.log(data)
-                        //在modules/hotel.js里面添加一个submitHotelSearchParams(data)
-                        //api/hotel.js里面对应着会有一个submitHotelSearchParamsAPI(data)
-                        //modules/hotel.js 里面set_searchedHotelList// 同时添加了一个 searchedHotelList
-                        //getter里面有一条getter
-
-                        // console.log('Received values of form: ', values);
                     }
 
                 });

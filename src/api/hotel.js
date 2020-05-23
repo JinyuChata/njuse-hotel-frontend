@@ -23,12 +23,12 @@ export function managedOrdersAPI(id) {
 }
 
 //发送酒店搜索的请求
-export function submitHotelSearchParamsAPI(params){
-    console.log(params)
+export function submitHotelSearchParamsAPI(data){
+    console.log("------")
     return axios({
         url: `${api.hotelPre}/hotel_search/detail`,
         method: 'POST',
-        params,
+        data,
     })
 }
 //不知道为啥，拦截不了这里的axios默认发8080干

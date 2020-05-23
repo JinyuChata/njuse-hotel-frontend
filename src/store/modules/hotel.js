@@ -16,7 +16,6 @@ import {
 
 const hotel = {
     state: {
-
         hotelList: [
 
         ],
@@ -78,7 +77,7 @@ const hotel = {
             state.orderMatchCouponList = data
         },
         //搜索酒店后的设置
-        set_searchedHotelList:function (state,data) {
+        set_searchedHotelList:function (state , data) {
             state.searchedHotelList=data
         }
     //    添加用户评论
@@ -127,7 +126,6 @@ const hotel = {
             }
         },
         submitHotelSearchParams:async({ state, commit }, data) =>{
-            // console.log(data)
             const res=await submitHotelSearchParamsAPI(data)
             if(res){
                 commit('set_searchedHotelList',res)
