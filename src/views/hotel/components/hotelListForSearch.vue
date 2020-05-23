@@ -1,6 +1,7 @@
 <template>
     <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="searchedHotelList">
         <div slot="footer">from <b>NJU-SE</b> hotel search</div>
+<!--        {{searchedHotelList}}-->
         <a-list-item slot="renderItem" key="item.title" slot-scope="item">
             <template slot="actions">
               <span :key="star">
@@ -24,11 +25,14 @@
                     height="190"
                     style="border-radius:12px"
                     alt="logo"
-                    :src="item.hotelPic"
+                src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
             />
+            <!--                 先顶一下   :src="item.hotelPic"-->
             <!--            先限制一下，等到之后再处理拉伸变形问题-->
-            <a-list-item-meta :description="item.address">
-                <a slot="title" :href="item.href">{{ item.name }}</a>
+            <a-list-item-meta :description="item.address"  >
+                <a slot="title" @click="jumpToDetails(item.id)">{{ item.name }}</a>
+                <a-button shape="circle" icon="search" slot="title" type="dashed"  @click.native="jumpToDetails(item.id)" style="margin-left: 12px">
+                </a-button>
                 <!--                <a-avatar slot="avatar" :src="item.avatar"/>-->
             </a-list-item-meta>
             {{ item.description }}
@@ -39,15 +43,16 @@
 <script>
     import {mapGetters, mapMutations, mapActions} from 'vuex'
 
-    //Integer id;
-    //  String name;
-    // String address;
-    // String bizRegion;
-    // String hotelStar;
-    // Double rate;
-    // String description;
-    // String phoneNum;
-    //Integer managerId;
+    // id: 2
+    // name: "儒家酒店"
+    // address: "南京市鼓楼区珠江路268号"
+    // biz_id: "js_nj_xinjiekou"
+    // hotelStar: "Four"
+    // rate: 4.8
+    // description: "欢迎您入住"
+    // phoneNum: "1829373819"
+    // managerId: 6
+    // rooms: null
     export default {
         computed: {
             ...mapGetters(['searchedHotelList'])
@@ -63,6 +68,11 @@
 
             };
         },
+        methods:{
+            jumpToDetails(id) {
+                this.$router.push({name: 'hotelDetail', params: {hotelId: id}})
+            }
+        }
     };
 </script>
 <style>

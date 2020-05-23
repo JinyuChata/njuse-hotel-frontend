@@ -128,26 +128,15 @@ const hotel = {
         submitHotelSearchParams:async({ state, commit }, data) =>{
             const res=await submitHotelSearchParamsAPI(data)
             if(res){
+                console.log("res::::::")
+                console.log(res)
                 commit('set_searchedHotelList',res)
             }else {
                 console.log("搜索失败")
             //    错误信息以后再说
             }
         }
-        // addHotelCoupon: async({ commit, dispatch }, data) => {
-        //     // console.log(data);
-        //     const res = await hotelTargetMoneyAPI(data);
-        //     if(res){
-        //         // 添加成功后的操作（提示文案、modal框显示与关闭，调用优惠列表策略等）
-        //         dispatch('getHotelCoupon');
-        //         commit('set_addCouponVisible', false);
-        //         commit('set_couponVisible',true);
-        //         message.success('添加策略成功');
-        //     }else{
-        //         // 添加失败后的操作
-        //         message.error('添加失败');
-        //     }
-        // },
+
         // bindManager: async({ state, commit }, data) => {
         //     const res = await orderMatchCouponsAPI(data)
         //     if(res){
