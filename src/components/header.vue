@@ -6,7 +6,7 @@
 
         </div>
         <a-menu v-model="current" mode="horizontal" theme="light">
-            <a-menu-item key="1" @click="selectMenu">
+            <a-menu-item key="1" @click="selectMenu" v-if="userInfo.userType!='Admin'">
                 <router-link to="/hotel/hotelList">
                     <a-icon type="home" />首页
                 </router-link>
@@ -31,11 +31,6 @@
                     <a-icon type="user" />账户管理
                 </router-link>
             </a-menu-item>
-            <a-menu-item key="6" @click="selectMenu" v-if="userInfo.userType=='HotelManager'">
-                <router-link :to="{ name: 'unusualOrder'}">
-                    <a-icon type="file" />所有异常订单
-                </router-link>
-            </a-menu-item>
         </a-menu>
         <div class="logout">
             <a-dropdown placement="bottomCenter">
@@ -45,11 +40,11 @@
                     <a-icon style="margin-left: 3px; font-size: 16px" type="down"></a-icon>
                 </div>
                 <a-menu slot="overlay">
-                    <a-menu-item  @click="jumpToHome()">
+                    <a-menu-item  @click="jumpToHome()" v-if="userInfo.userType=='Client'">
                         <a-icon type="home"></a-icon>
                         首页
                     </a-menu-item>
-                    <a-menu-item @click="jumpToUserInfo()">
+                    <a-menu-item @click="jumpToUserInfo()" v-if="userInfo.userType!='Admin'">
                         <a-icon type="profile"></a-icon>
                         我的信息
                     </a-menu-item>

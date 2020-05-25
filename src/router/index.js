@@ -51,11 +51,6 @@ const routes = [
         name: 'manageUser',
         component: () => import('@/views/admin/manageUser')
       },
-      {
-        path: '/hotelManager/unusualOrder',
-        name: 'unusualOrder',
-        component: () => import('@/views/hotelManager/unusualOrder')
-      },
     ]
   },
 ]

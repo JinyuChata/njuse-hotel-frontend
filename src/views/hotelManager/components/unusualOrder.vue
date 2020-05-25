@@ -1,15 +1,26 @@
 <template>
-    <a-table
-            :columns="columns1"
-            :dataSource="unusualOrderList"
-            bordered
-    >
-
-    </a-table>
+    <div>
+        <a-drawer
+                title="当日异常订单"
+                placement="top"
+                :closable="false"
+                height="400"
+                :visible="unusualOrderVisible"
+                @close="onClose"
+        >
+            <a-table
+                    size="small"
+                    :columns="columns1"
+                    :dataSource="unusualOrderList"
+                    bordered
+            >
+            </a-table>
+        </a-drawer>
+    </div>
 </template>
 
 <script>
-    import {mapActions, mapGetters} from "vuex";
+    import {mapActions, mapGetters, mapMutations} from "vuex";
 
     const columns1 = [
         {
@@ -56,22 +67,37 @@
     ];
     export default {
         name: "unusualOrder",
-        data(){
-            return{
+        props: [
+            'hotelId',
+        ],
+        data() {
+            return {
                 columns1
             }
         },
-        mounted() {
-            this.getUnusualOrderList()
-        },
         computed: {
-            ...mapActions([
-                'getUnusualOrderList'
-            ]),
             ...mapGetters([
+                'unusualOrderVisible',
                 'unusualOrderList'
             ])
         },
+        async mounted() {
+            // await this.getUnusualOrderList(this.hotelId)
+        },
+        methods: {
+            ...mapActions([
+                'getUnusualOrderList'
+            ]),
+            ...mapMutations([
+                'set_unusualOrderVisible',
+            ]),
+            onClose() {
+                this.set_unusualOrderVisible(false);
+            },
+            // afterVisibleChange(id) {
+            //     this.getUnusualOrderList(id)
+            // },
+        }
     }
 </script>
 

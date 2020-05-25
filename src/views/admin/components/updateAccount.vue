@@ -64,8 +64,8 @@
             this.form = this.$form.createForm(this, { name: 'updateAccount' });
             setTimeout(() => {
                 this.form.setFieldsValue({
-                    'username': this.userInfo.userName,
-                    'phonenumber': this.userInfo.phoneNumber,
+                    'username': this.userInfo.username,
+                    'phonenumber': this.userInfo.phonenumber,
                 })
             }, 0)
 

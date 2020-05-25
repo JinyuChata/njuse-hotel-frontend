@@ -12,7 +12,7 @@
                         />
                         <span v-else>{{ userInfo.userName }}</span>
                     </a-form-item>
-                    <a-form-item label="邮箱号" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
+                    <a-form-item label="邮箱" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
                         <span>{{ userInfo.email }}</span>
                     </a-form-item>
 
@@ -27,10 +27,10 @@
                     <a-form-item label="信用值" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
                         <span>{{ userInfo.credit }}</span>
                     </a-form-item>
-<!--            因为没数据，暂且搁置了   显示是否为会员！！-->
-<!--                    <a-form-item label="会员类型"  v-if="userInfo.isMember" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">-->
-<!--                        <span>{{ userInfo.memberType}}</span>-->
-<!--                    </a-form-item>-->
+                    <!--            因为没数据，暂且搁置了   显示是否为会员！！-->
+                    <!--                    <a-form-item label="会员类型"  v-if="userInfo.isMember" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">-->
+                    <!--                        <span>{{ userInfo.memberType}}</span>-->
+                    <!--                    </a-form-item>-->
                     <a-form-item label="密码" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }"
                                  v-if="modify">
                         <a-input
@@ -46,25 +46,22 @@
                             取消
                         </a-button>
                     </a-form-item>
-                    <a-form-item :wrapper-col="{ span: 8, offset: 2 }" v-else>
-                        <a type="primary" @click="modifyInfo">
+                    <a-form-item :wrapper-col="{ span: 8, offset: 4 }" v-else>
+                        <a-button type="primary" @click="modifyInfo">
                             修改信息
-
-                        </a>
-                        <a-button type="link" @click="handleRegistere" style="margin-left: 20px">
-                            注册会员
                         </a-button>
                     </a-form-item>
                 </a-form>
-<!--                <a-button type="link" @click="handleRegistere" style="margin-left: 90px">-->
-<!--                    注册会员-->
-<!--                </a-button>-->
+                <a-button type="link" @click="handleRegistere" style="margin-left: 90px">
+                    注册会员
+                </a-button>
             </a-tab-pane>
             <a-tab-pane tab="我的订单" key="2">
                 <a-table
+                        size="middle"
                         :columns="columns"
                         :dataSource="userOrderList"
-                        bordered
+
                 >
                     <span slot="price" slot-scope="text">
                         <span>￥{{ text }}</span>
@@ -78,7 +75,7 @@
                         {{ text }}
                     </span>
                     <span slot="action" slot-scope="record">
-                        <a type="primary" size="small">查看</a>
+                        <a-button type="primary" size="small">查看</a-button>
                         <a-divider type="vertical" v-if="record.orderState == '已预订'"></a-divider>
                         <a-popconfirm
                                 title="你确定撤销该笔订单吗？"
@@ -88,46 +85,58 @@
                                 cancelText="取消"
                                 v-if="record.orderState == '已预订'"
                         >
-                            <a type="danger" size="small">撤销</a>
+                            <a-button type="danger" size="small">撤销</a-button>
                         </a-popconfirm>
                     </span>
                 </a-table>
             </a-tab-pane>
             <a-tab-pane tab="信用记录" key="3">
-                <a-button type="info" size="small" @click="showModal">信用充值</a-button>
-                <a-modal
-                        title="Title"
-                        :visible="visible"
-                        :confirm-loading="confirmLoading"
-                        @ok="handleOk"
-                        @cancel="handleCancel"
-                >
-
-                </a-modal>
-
                 <a-table
-                        :columns = "creditColumns"
-                        :data-source="userOrderList"
-                        bordered
+                        :columns="creditColumns"
+                        :data-source="creditInfo"
+                        size="middle"
                 >
-                    <span slot="action" slot-scope="record">
-                        <a-button type="primary" size="small" @click="carryOrder(record)">订单执行</a-button>
-                        <a-divider type="vertical"></a-divider>
-                        <a-button type="info" size="small" @click="unusualOrder(record)">订单异常</a-button>
-                        <a-divider type="vertical"></a-divider>
-                         <a-popconfirm
-                                 title="确定想撤销该订单吗？"
-                                 @confirm="cancelOrder(record)"
-                                 okText="确定"
-                                 cancelText="取消"
-                         >
-                            <a-button type="danger" size="small">订单撤销</a-button>
-                         </a-popconfirm>
-                        <a-divider type="vertical"></a-divider>
-
-
+                    <span slot="action" slot-scope="text">
+                    <a-tag color="green" v-if="text=='OrderExec'">
+                        订单已执行
+                    </a-tag>
+                    <a-tag color="red" v-if="text=='OrderErr'">
+                        订单异常
+                    </a-tag>
+                    <a-tag color="gray" v-if="text=='OrderRetreat'">
+                        订单已取消
+                    </a-tag>
+                    <a-tag color="lightgreen" v-if="text=='AddFrc'">
+                        信用充值
+                    </a-tag>
                     </span>
                 </a-table>
+            </a-tab-pane>
+
+            <a-tab-pane tab="信用充值" key="4">
+                <div>
+                    <br><br>
+                    <a-form :form="form" @submit="handleOk" :label-col="{ span: 8 }" :wrapper-col="{ span: 8 }" >
+                        <a-form-item label="客户ID：">
+                            <a-input
+                                    v-decorator="[ 'id',
+                                { rules: [{required: true, message: '请输入客户ID', }] }]">
+                            </a-input>
+                        </a-form-item>
+                        <a-form-item label="充值金额：">
+                            <a-input
+                                    :formatter="value => `¥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                                    v-decorator="[ 'money',
+                                { rules: [{required: true, message: '请输入金额', }] }]">
+                            </a-input>
+                        </a-form-item>
+                        <a-form-item :wrapper-col="{ span: 1, offset: 11 }">
+                            <a-button type="primary" html-type="submit">
+                                Submit
+                            </a-button>
+                        </a-form-item>
+                    </a-form>
+                </div>
             </a-tab-pane>
         </a-tabs>
         <registered-member :registeredMemberVisible="registeredMemberVisible"></registered-member>
@@ -187,23 +196,24 @@
     const creditColumns = [
         {
             title: '时间',
-            dataIndex: 'createDate',
+            dataIndex: 'time',
         },
         {
             title: '订单号',
-            dataIndex: 'id',
+            dataIndex: 'orderId',
         },
         {
             title: '动作',
-            dataIndex: 'orderState',
+            dataIndex:'action',
+            scopedSlots: {customRender: 'action'}
         },
         {
             title: '信用度变化',
-            dataIndex: 'change',
+            dataIndex: 'changeVal',
         },
         {
             title: '信用度结果',
-            dataIndex: 'result',
+            dataIndex: 'afterChange',
         },
     ];
 
@@ -216,6 +226,7 @@
                 pagination: {},
                 columns,
                 creditColumns,
+                visible: false,
                 data: [],
                 form: this.$form.createForm(this, {name: 'coordinated'}),
 
@@ -227,14 +238,17 @@
         computed: {
             ...mapGetters([
                 'userId',
+                'creditInfo',
                 'userInfo',
                 'userOrderList',
                 'registeredMemberVisible',
-            ])
+            ]),
+
         },
         async mounted() {
             await this.getUserInfo()
             await this.getUserOrders()
+            await this.getCreditInfo()
 
         },
         methods: {
@@ -242,13 +256,21 @@
                 'getUserInfo',
                 'getUserOrders',
                 'updateUserInfo',
-                'cancelOrder'
+                'cancelOrder',
+                'investCredit',
+                'getCreditInfo'
             ]),
             ...mapMutations([
                 'set_registeredMemberVisible',
             ]),
-            investCredit(){
-
+            handleOk() {
+                const data = {
+                    id: this.form.getFieldValue('id'),
+                    investedMoney: this.form.getFieldValue('money')
+                }
+                console.log(data)
+                this.investCredit(data)
+                this.visible = false
             },
             saveModify() {
                 this.form.validateFields((err, values) => {

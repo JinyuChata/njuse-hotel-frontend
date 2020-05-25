@@ -6,9 +6,9 @@
                     <a-button type="primary" @click="addManager"><a-icon type="plus" />添加用户</a-button>
                 </div>
                 <a-table
+                    size="middle"
                     :columns="columns"
                     :dataSource="managerList"
-                    bordered
                 >
                     <span slot="action" slot-scope="record">
                         <a-popconfirm
@@ -17,11 +17,12 @@
                                 okText="确定"
                                 cancelText="取消"
                         >
-                            <a-button type="danger" size="small">删除用户</a-button>
+                            <a-icon type="delete" theme="twoTone" twoToneColor="red" 删除用户/>
                         </a-popconfirm>
 
                         <a-divider type="vertical"></a-divider>
-                        <a-button type="primary" @click="updateAccount(record.id)" size="small">更改信息</a-button>
+                        <a-icon type="form" @click="updateAccount(record.id)" />
+<!--                        <a-button type="primary"  size="small">更改信息</a-button>-->
 <!--                        <a-divider type="vertical"></a-divider>-->
 <!--                        <a-button type="primary" @click="setAsManager(record.id)" size="small">设置为网站管理员</a-button>-->
 
@@ -33,9 +34,9 @@
 <!--&lt;!&ndash;                    <a-button type="primary" @click="addHotelModal"><a-icon type="plus" />添加酒店</a-button>&ndash;&gt;-->
 <!--                </div>-->
                 <a-table
+                        size="middle"
                         :columns="columns"
                         :dataSource="clientList"
-                        bordered
                 >
                     <span slot="action" slot-scope="record">
                         <a-popconfirm
@@ -44,14 +45,35 @@
                                 okText="确定"
                                 cancelText="取消"
                         >
-                            <a-button type="danger" size="small">删除用户</a-button>
+                            <a-icon type="delete" theme="twoTone" twoToneColor="red" 删除用户/>
                         </a-popconfirm>
 
                         <a-divider type="vertical"></a-divider>
-                        <a-button type="primary" @click="updateAccount(record.id)" size="small">更改信息</a-button>
+
+                        <a-icon type="form" @click="updateAccount(record.id)" />
                         <!--                        <a-divider type="vertical"></a-divider>-->
                         <!--                        <a-button type="primary" @click="setAsManager(record.id)" size="small">设置为网站管理员</a-button>-->
 
+                    </span>
+                </a-table>
+            </a-tab-pane>
+            <a-tab-pane tab="酒店管理" key="3">
+                <a-table
+                        size="middle"
+                        :columns="columns1"
+                        :data-source="hotelList"
+                        >
+                    <span slot="action" slot-scope="record">
+                            <a-form :form="form" v-show="record.managerId==null">
+                                <a-form-item v-bind="formItemLayout" >
+                                <a-input-number
+                                        v-decorator="['managerId']"
+                                />
+                                    <a-button slot="enterButton">Custom</a-button>
+                                    <a-divider type="vertical"></a-divider>
+                                    <a-button type="primary" @click="bind(record.id)" size="small">绑定酒店管理人员</a-button>
+                                </a-form-item>
+                            </a-form>
                     </span>
                 </a-table>
             </a-tab-pane>
@@ -91,14 +113,43 @@ const columns = [
       scopedSlots: { customRender: 'action' },
     },
   ];
+const columns1 = [
+    {
+        title: '酒店ID',
+        dataIndex: 'id',
+    },
+    {
+        title: '酒店名称',
+        dataIndex: 'name',
+    },
+    {
+        title: '管理员ID',
+        dataIndex: 'managerId',
+    },
+    {
+        title: '操作',
+        key: 'action',
+        scopedSlots: { customRender: 'action' },
+    },
+];
 export default {
     name: 'manageUser',
     data(){
         return {
             id:'',
-            formLayout: 'horizontal',
+            formItemLayout: {
+                labelCol: {
+                    xs: { span: 12 },
+                    sm: { span: 6 },
+                },
+                wrapperCol: {
+                    xs: { span: 24 },
+                    sm: { span: 16 },
+                },
+            },
             pagination: {},
             columns,
+            columns1,
             data: [],
             form: this.$form.createForm(this, { name: 'manageUser' }),
         }
@@ -112,24 +163,36 @@ export default {
             'addManagerModalVisible',
             'updateAccountVisible',
             'managerList',
-            'clientList'
+            'clientList',
+            'hotelList',
         ])
     },
     mounted() {
-      this.getManagerList();
-      this.getClientList();
+      this.getManagerList(),
+      this.getClientList(),
+      this.getHotelList()
     },
     methods: {
         ...mapActions([
             'getManagerList',
             'getClientList',
-            'deleteAccount'
+            'deleteAccount',
+            'getHotelList',
+            'bindManager'
         ]),
         ...mapMutations([
             'set_addManagerModalVisible',
             'set_updateAccountVisible',
 
         ]),
+
+        bind(id) {
+            const data = {
+                hotelId: id,
+                mgrId: this.form.getFieldValue('managerId')
+            }
+            this.bindManager(data)
+        },
         addManager(){
             this.set_addManagerModalVisible(true)
         },
@@ -139,8 +202,7 @@ export default {
         },
 
         delAccount(id){
-            const data={ id: id,};
-            this.deleteAccount(data)
+            this.deleteAccount(id)
         }
     }
 }

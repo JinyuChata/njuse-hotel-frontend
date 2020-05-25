@@ -1,15 +1,17 @@
 import {
     addRoomAPI,
     addHotelAPI,
-    mgrHotelListAPI,
-    submitManageHotelParamsAPI
+    mgrHotelListAPI
 } from '@/api/hotelManager'
 import {
     managedOrdersAPI
 } from '@/api/hotel'
 import {
     getAllOrdersAPI,
-    deleteOrderAPI
+    deleteOrderAPI,
+    checkInAPI,
+    checkOutAPI,
+    abnormalOrdersOfTheDayAPI
 } from '@/api/order'
 import {
     hotelAllCouponsAPI,
@@ -19,6 +21,7 @@ import { message } from 'ant-design-vue'
 
 const hotelManager = {
     state: {
+        unusualOrderList:[],
         managedOrders:[],
         mgrHotelList:[],
         orderList: [],
@@ -43,7 +46,7 @@ const hotelManager = {
         addRoomModalVisible: false,
         couponVisible: false,
         addCouponVisible: false,
-        manageHotelVisible: false,
+        unusualOrderVisible: false,
         activeHotelId: 0,
         couponList: [],
     },
@@ -59,6 +62,10 @@ const hotelManager = {
         },
         set_addHotelModalVisible: function(state, data) {
             state.addHotelModalVisible = data
+        },
+        set_unusualOrderVisible: function(state, data) {
+            state.unusualOrderVisible = data
+
         },
         set_addHotelParams: function(state, data) {
             state.addHotelParams = {
@@ -87,15 +94,23 @@ const hotelManager = {
         set_addCouponVisible: function(state, data) {
             state.addCouponVisible =data
         },
-        set_manageHotelVisible: function (state, data) {
-            state.manageHotelVisible = data;
-        }
+        set_unusualOrderList: (state, data) => {
+            state.unusualOrderList = data
+            console.log(state.unusualOrderList)
+        },
     },
     actions: {
         getAllOrders: async({ state, commit }) => {
             const res = await getAllOrdersAPI()
             if(res){
                 commit('set_orderList', res)
+            }
+        },
+        getUnusualOrderList: async({ state,commit },id) => {
+            console.log(id)
+            const res = await abnormalOrdersOfTheDayAPI(id)
+            if(res){
+                commit('set_unusualOrderList', res)
             }
         },
         addHotel: async({ state, dispatch, commit }) => {
@@ -120,7 +135,6 @@ const hotelManager = {
         },
         addRoom: async({ state, dispatch, commit }) => {
             const res = await addRoomAPI(state.addRoomParams)
-            console.log(state.addRoomParams.roomTime)
             if(res){
                 commit('set_addRoomModalVisible', false)
                 commit('set_addRoomParams', {
@@ -157,7 +171,6 @@ const hotelManager = {
             }
         },
         deleteOrder: async({ state, dispatch }, id) => {
-            //console.log(id)
             const res = await deleteOrderAPI(id)
             if(res){
                 message.success('删除成功')
@@ -165,29 +178,29 @@ const hotelManager = {
             }
         },
         getMgrHotelList: async({ state, commit }, id) => {
-            //console.log(id)
             const res = await mgrHotelListAPI(id)
             if(res){
                 commit('set_mgrHotelList', res)
             }
         },
         getManagedOrders: async({ state, commit }, id) => {
-            console.log(id)
             const res = await managedOrdersAPI(id)
             if(res){
                 commit('set_managedOrders', res)
             }
         },
-        //提交酒店维护信息
-        submitManageHotelParams:async({ commit, dispatch }, data) => {
-            console.log(data)
-            const res = await submitManageHotelParamsAPI(data)
-            if(res){//我很好奇请求成功以后会发什么回来？
-                dispatch('getMgrHotelList')//应该是获取所有的酒店
-                commit('set_manageHotelVisible', false);
-                message.success('修改成功')
-            }else {
-                message.error('修改失败');
+        checkIn:async({ state, dispatch }, id) => {
+            const res = await checkInAPI(id)
+            if(res){
+                message.success('入住成功')
+                dispatch('getManageOrders')
+            }
+        },
+        checkOut:async({ state, dispatch }, id) => {
+            const res = await checkOutAPI(id)
+            if(res){
+                message.success('退房成功')
+                dispatch('getManageOrders')
             }
         },
     }

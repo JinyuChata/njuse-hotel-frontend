@@ -42,11 +42,19 @@ export function setAsMgrAPI(data) {
         data
     })
 }
-export function deleteAccountAPI(data) {
+export function deleteAccountAPI(id) {
     return axios({
-        url: `${api.adminPre}/deleteAccount/${data.id}`,
+        url: `${api.adminPre}/deleteAccount/${id}`,
         method: 'POST',
-  //      data
+    })
+}
+
+export function bindManagerAPI(data) {
+    console.log(data)
+    return axios({
+        url: `${api.adminPre}/hotel/bindManager`,
+        method: 'POST',
+        data
     })
 }
 

@@ -50,7 +50,7 @@
             <a-form-item label="优惠时间" v-bind="formItemLayout">
                 <a-range-picker @change="onChange">
                 <a-icon slot="suffixIcon" type="calendar" />
-                 </a-range-picker>
+            </a-range-picker>
             </a-form-item>
         </a-form>
     </a-modal>
