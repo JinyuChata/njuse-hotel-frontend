@@ -102,23 +102,33 @@
                 <span>￥{{ totalPrice }}</span>
             </a-form-item>
             <a-divider></a-divider>
-            <h2 v-if="orderMatchCouponList.length>0">优惠</h2>
-            <a-checkbox-group v-model="checkedList" @change="onchange">
-                <a-table
-                    :columns="columns"
-                    :dataSource="orderMatchCouponList"
-                    :showHeader="false"
-                    bordered
-                    v-if="orderMatchCouponList.length>0"
-                >
-                    <a-checkbox
-                        slot="id"
-                        slot-scope="record"
-                        :value="record"
-                    >
-                    </a-checkbox>
-                </a-table>
-            </a-checkbox-group>
+            <div v-if="orderMatchCouponList.length>0">
+                <a-collapse accordion default-active-key="1" :bordered="false">
+                    <a-collapse-panel key="1" header="有可用的优惠券" class="collapse">
+
+<!--                        <a-radio-group v-model="checkedList" @change="onchange">-->
+                        <a-radio-group v-model="selectedCouponid" @change="onchange">
+                            <a-table
+                                    :columns="columns"
+                                    :dataSource="orderMatchCouponList"
+                                    :showHeader="false"
+                                    bordered
+                                    v-if="orderMatchCouponList.length>0"
+                            >
+                                <a-radio
+                                        slot="id"
+                                        slot-scope="record"
+                                        :value="record"
+                                >
+                                </a-radio>
+                            </a-table>
+
+                        </a-radio-group>
+                    </a-collapse-panel>
+                </a-collapse>
+            </div>
+            {{selectedCoupon}}
+<!--            {{selectedCoupon[0].couponType}}-->
              <a-form-item v-bind="formItemLayout" label="结算后总价">
                 <span>￥{{ finalPrice }}</span>
             </a-form-item>
@@ -171,9 +181,34 @@ export default {
             totalPrice: '',
             columns,
             checkedList: [],
+            selectedCouponid:0,
+            selectedCoupon:{},
             finalPrice: ''
         }
     },
+//     [ { "id": 2,
+//         "description": "满500-100优惠",
+//         "hotelId": 1, "couponType": 3,
+//         "couponName": "满减优惠券",
+//         "targetMoney": 500,
+//         "discount": 0,
+//         "discountMoney": 100,
+//         "startTime": null,
+//         "endTime": null, "status": 1 },
+// { "id": 4, "description": "NJU网站满减优惠",
+//     "hotelId": 1, "couponType": 3,
+//     "couponName": "NJU满1000减200",
+//     "targetMoney": 1000, "discount": 0,
+//     "discountMoney": 200, "startTime": null,
+//     "endTime": null, "status": 1 },
+// { "id": 8, "description": "312", "hotelId": 1,
+//     "couponType": 3,
+//     "couponName": "3",
+//     "targetMoney": 0,
+//     "discount": -1,
+//     "discountMoney": 0,
+//     "startTime": null,
+//     "endTime": null, "status": 1 } ]
     computed: {
         ...mapGetters([
             'orderModalVisible',
@@ -183,7 +218,7 @@ export default {
             'userId',
             'orderMatchCouponList'
         ]),
-        
+
     },
     beforeCreate() {
         this.form = this.$form.createForm(this, { name: 'orderModal' });
@@ -214,12 +249,37 @@ export default {
             this.totalPrice = Number(v) * Number(this.currentOrderRoom.price) * moment(this.form.getFieldValue('date')[1]).diff(moment(this.form.getFieldValue('date')[0]),'day')
         },
         onchange() {
-            this.finalPrice = this.totalPrice
-            if(this.checkedList.length>0){
-                this.orderMatchCouponList.filter(item => this.checkedList.indexOf(item.id)!=-1).forEach(item => this.finalPrice= this.finalPrice-item.discountMoney)
-            }else{
-                
-            }
+
+            this.selectedCoupon=(this.orderMatchCouponList.filter(item =>item.id==this.selectedCouponid))[0]
+            this.calculatePrice();
+        },
+        calculatePrice(){
+            this.finalPrice = this.totalPrice;
+            // console.log('执行')
+                switch (this.selectedCoupon.couponType) {
+                    case 3:
+                        // console.log('执行l')
+                        this.finalPrice= this.finalPrice-this.selectedCoupon.discountMoney;
+                        break;
+                    case 4:
+                        if(this.selectedCoupon.discount==0){
+                            this.finalPrice= this.finalPrice-this.selectedCoupon.discountMoney;
+                        }else {
+                            this.finalPrice=this.finalPrice*this.selectedCoupon.discount;
+                        }
+                        // console.log('执行l')
+
+                        break;
+                    case 5:
+                        // console.log('执行l')
+                        if(this.selectedCoupon.discount==0){
+                            this.finalPrice= this.finalPrice-this.selectedCoupon.discountMoney;
+                        }else {
+                            this.finalPrice=this.finalPrice*this.selectedCoupon.discount;
+                        }
+                        break;
+                }
+            // }
         },
         handleSubmit(e) {
             e.preventDefault();

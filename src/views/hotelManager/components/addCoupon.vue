@@ -40,18 +40,18 @@
                 <a-form-item label="达标金额">
                     <a-input
                             placeholder="请填写达标金额"
-                            v-decorator="['targetMoney', { rules: [{ required: false, message: '请填写达标金额' }] }]"
+                            v-decorator="['targetMoney', { rules: [{ required: true, message: '请填写达标金额' }] }]"
                     />
                 </a-form-item>
                 <a-form-item label="优惠金额" v-bind="formItemLayout">
                     <a-input
                             placeholder="请填写优惠金额"
-                            v-decorator="['discountMoney', { rules: [{ required: false, message: '请填写优惠金额' }] }]"
+                            v-decorator="['discountMoney', { rules: [{ required: true, message: '请填写优惠金额' }] }]"
                     />
                 </a-form-item>
             </div>
             <div v-if="couponType==4 || couponType==5">
-                <a-collapse default-active-key="1" :bordered="false">
+                <a-collapse accordion default-active-key="1" :bordered="false">
                     <a-collapse-panel key="1" header="使用满减优惠" class="collapse">
                         <a-form-item label="达标金额">
                             <a-input
@@ -83,7 +83,7 @@
 <!--                        v-decorator="['discountNumber', { rules: [{ required: false, message: '请填写折扣大小' }] }]"-->
 <!--                />-->
 <!--            </a-form-item>-->
-            <a-form-item label="优惠时间" v-bind="formItemLayout" v-if="couponType!=3">
+            <a-form-item label="优惠时间" v-bind="formItemLayout" v-if="couponType!=3" >
                 <a-range-picker @change="onChange">
                 <a-icon slot="suffixIcon" type="calendar" />
                  </a-range-picker>
@@ -155,18 +155,18 @@
                             name: this.form.getFieldValue('name'),
                             description: this.form.getFieldValue('description'),
                             type: Number(this.form.getFieldValue('type')),
-                            targetMoney: isNaN(Number(this.form.getFieldValue('targetMoney')))?null:Number(this.form.getFieldValue('targetMoney')),
-                            discountMoney: isNaN(Number(this.form.getFieldValue('discountMoney')))?null:Number(this.form.getFieldValue('discountMoney')),
+                            targetMoney: isNaN(Number(this.form.getFieldValue('targetMoney')))?0:Number(this.form.getFieldValue('targetMoney')),
+                            discountMoney: isNaN(Number(this.form.getFieldValue('discountMoney')))?0:Number(this.form.getFieldValue('discountMoney')),
                             hotelId: Number(this.activeHotelId),
-                            discount:isNaN(Number(this.form.getFieldValue('discount')))?null:Number(this.form.getFieldValue('discount')),
+                            discount:isNaN(Number(this.form.getFieldValue('discount')))?0:Number(this.form.getFieldValue('discount')),
                             status: 1,
-                            hasCouponTime:this.hasCouponTime,
+                            hasCouponTime:this.hasCouponTime==true?1:0,//好像ture or false
                             startDate:this.hasCouponTime?this.couponTime[0]:null,
                             endDate:this.hasCouponTime?this.couponTime[1]:null,
                             // couponTime: this.hasCouponTime?this.couponTime:[],
                         };
                         console.log(data)
-                        // this.addHotelCoupon(data);
+                        this.addHotelCoupon(data);
                     }
                 });
             },//响应按钮的按下，调用action方法

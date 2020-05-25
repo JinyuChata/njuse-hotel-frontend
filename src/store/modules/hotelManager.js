@@ -14,6 +14,7 @@ import {
 import {
     hotelAllCouponsAPI,
     hotelTargetMoneyAPI,
+    hotelFestivalAPI,
 } from '@/api/coupon'
 import { message } from 'ant-design-vue'
 
@@ -144,15 +145,26 @@ const hotelManager = {
         },
         addHotelCoupon: async({ commit, dispatch }, data) => {
             // console.log(data);
-            const res = await hotelTargetMoneyAPI(data);
+            // console.log('优惠券类型')
+            // console.log(data.type)
+            let res={};
+            if(data.type==3){
+                 res= await hotelTargetMoneyAPI(data);
+            }else if(data.type==4){
+                 res= await hotelFestivalAPI(data);
+            }else {
+                 res= await hotelFestivalAPI(data);
+            }
             if(res){
                 // 添加成功后的操作（提示文案、modal框显示与关闭，调用优惠列表策略等）
                 dispatch('getHotelCoupon');
                 commit('set_addCouponVisible', false);
                 commit('set_couponVisible',true);
-                message.success('添加策略成功');
+                message.success('添加优惠劵成功');
             }else{
                 // 添加失败后的操作
+                commit('set_addCouponVisible', false);
+                commit('set_couponVisible',true);
                 message.error('添加失败');
             }
         },

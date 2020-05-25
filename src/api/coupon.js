@@ -9,7 +9,13 @@ export function hotelTargetMoneyAPI(data) {
         data,
     })
 }
-
+export function hotelFestivalAPI(data) {
+    return axios({
+        url: `${api.couponPre}/hotelFestival`,
+        method: 'POST',
+        data,
+    })
+}
 
 export function hotelAllCouponsAPI(hotelId) {
     return axios({
