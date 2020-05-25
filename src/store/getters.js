@@ -9,7 +9,7 @@ const getters = {
   //为了显示出来注册组件
   hotelListLoading: state => state.hotel.hotelListLoading,
   hotelList: state => state.hotel.hotelList,
-  searchedHotelList: state => state.searchedHotelList,
+  searchedHotelList: state => state.hotel.searchedHotelList,
   currentHotelInfo: state => state.hotel.currentHotelInfo,
   currentHotelId: state => state.hotel.currentHotelId,
   orderModalVisible: state => state.hotel.orderModalVisible,
