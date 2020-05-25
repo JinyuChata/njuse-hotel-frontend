@@ -6,7 +6,7 @@
                 <a-col :span="1"></a-col>
                 <a-col :span="7"
                 >
-                    <a-form-item label="城市">
+                    <a-form-item  label="城市">
                         <a-cascader
                                 v-decorator="[
                           'address',
@@ -22,39 +22,26 @@
                     </a-form-item>
                 </a-col>
                 <a-col :span="7"
-                       :style="{ display: 0 < count ? 'block' : 'none'}"
+                        :style="{ display: 0 < count ? 'block' : 'none'}"
                 >
                     <a-form-item :label="`间数`">
                         <a-input
                                 v-decorator="[
-                'roomDemandCnt',
-                {
-                  rules: [
-                    {
-                      required: true,
-                      message: '请选择预定房间数',
-                    },
-                  ],
-                },
+                'roomDemandCnt'
               ]"
                                 placeholder="房间数"
                         />
                     </a-form-item>
                 </a-col>
                 <a-col :span="8"
-                       :style="{ display: 0 < count ? 'block' : 'none'}"
+                        :style="{ display: 0 < count ? 'block' : 'none'}"
                 >
                     <a-form-item label="入住时间" v-bind="formItemLayout" style="margin-left: 0; margin-right: 5px">
                         <a-range-picker @change="selectedDate"
                                         v-decorator="[
-                          'roomdate',
-                          {
-                            rules: [
-                              {  required: true },
-                            ],
-                          },
+                          'roomdate'
                         ]">
-                            <a-icon slot="suffixIcon" type="calendar"/>
+                            <a-icon slot="suffixIcon" type="calendar" />
                         </a-range-picker>
                     </a-form-item>
                 </a-col>
@@ -62,7 +49,7 @@
             <a-row :gutter="24" :style="{ display: 1 < count ? 'block' : 'none'}">
                 <a-col :span="1"></a-col>
                 <a-col :span="7"
-                       :style="{ display: 0 < count ? 'block' : 'none'}"
+                        :style="{ display: 0 < count ? 'block' : 'none'}"
                 >
                     <a-form-item :label="`价格区间`" style="margin-bottom:0;">
                         <a-input
@@ -81,7 +68,7 @@
                     </a-form-item>
                 </a-col>
                 <a-col :span="7"
-                       :style="{ display: 0 < count ? 'block' : 'none'}"
+                        :style="{ display: 0 < count ? 'block' : 'none'}"
                 >
                     <a-form-item :label="`评分区间`" style="margin-bottom:0;">
                         <a-input
@@ -120,7 +107,7 @@
                 >
                     <a-form-item :label="` 星级`">
                         <a-checkbox-group
-                                v-decorator="['checkbox-group', { initialValue: ['Five', 'Four','Three'] }]"
+                                v-decorator="['checkbox-group', { initialValue: ['Five', 'Four'] }]"
                                 style="width: 100%; display: inline-block; padding-top: 10px; margin-left: 10px"
                         >
                             <a-row>
@@ -164,11 +151,11 @@
                         />
                     </a-form-item>
                 </a-col>
-                <a-col :span="1"></a-col>
+            <a-col :span="1"></a-col>
             </a-row>
             <a-row>
                 <a-col :span="23" :style="{ textAlign: 'right' }">
-                    <a-button type="primary" html-type="submit">
+                    <a-button type="primary" html-type="submit" >
                         确定
                     </a-button>
                     <a-button :style="{ marginLeft: '8px' }" @click="handleReset">
@@ -193,7 +180,7 @@
                 </span>
                 <a-menu-item-group title="排序方式">
                     <a-menu-item key="c_up" @click="onSortComment('up')">
-                        <a-icon type="caret-up"/>
+                        <a-icon type="caret-up" />
                         升序
                     </a-menu-item>
                     <a-menu-item key="c_down" @click="onSortComment('down')">
@@ -214,7 +201,7 @@
                 </span>
                 <a-menu-item-group title="排序方式">
                     <a-menu-item key="p_up" @click="onSortPop('up')">
-                        <a-icon type="caret-up"/>
+                        <a-icon type="caret-up" />
                         升序
                     </a-menu-item>
                     <a-menu-item key="p_down" @click="onSortPop('down')">
@@ -235,7 +222,7 @@
                 </span>
                 <a-menu-item-group title="排序方式">
                     <a-menu-item key="s_up" @click="onSortStar('up')">
-                        <a-icon type="caret-up"/>
+                        <a-icon type="caret-up" />
                         升序
                     </a-menu-item>
                     <a-menu-item key="s_down" @click="onSortStar('down')">
@@ -257,7 +244,7 @@
 </template>
 <script>
     import hotelList from "./hotelListForSearch";
-    import {mapGetters, mapMutations, mapActions} from 'vuex'
+    import { mapGetters, mapMutations, mapActions } from 'vuex'
 
     export default {
         components: {
@@ -274,21 +261,21 @@
                 current: ['mail'],
                 expand: false,
                 form: this.$form.createForm(this, {name: 'advanced_search'}),
-                roomdate: Array,
-                stars: Array,
-                isOrdered: false,
+                roomdate:Array,
+                stars:Array,
+                isOrdered:false,
             };
         },
         computed: {
             ...mapGetters([
                 'residences',
-                'searchedHotelList'
+                'userId'
             ]),
             sortIcon() {
                 return {
-                    comment: this.sort.comment === 'none' ? 'like' : ('caret-' + this.sort.comment),
-                    star: this.sort.star === 'none' ? 'star' : ('caret-' + this.sort.star),
-                    pop: this.sort.pop === 'none' ? 'solution' : ('caret-' + this.sort.pop),
+                    comment: this.sort.comment === 'none' ? 'like' : ('caret-'+this.sort.comment),
+                    star: this.sort.star === 'none' ? 'star' : ('caret-'+this.sort.star),
+                    pop: this.sort.pop === 'none' ? 'solution' : ('caret-'+this.sort.pop),
                 }
             },
             collapseText() {
@@ -317,56 +304,24 @@
                 'submitHotelSearchParams',
                 'getResidences'
             ]),
-            // id: 2
-            // name: "儒家酒店"
-            // address: "南京市鼓楼区珠江路268号"
-            // biz_id: "js_nj_xinjiekou"
-            // hotelStar: "Four"
-            // rate: 4.8
-            // description: "欢迎您入住"
-            // phoneNum: "1829373819"
-            // managerId: 6
-            // rooms: null
-            sortBykeyDown(ary, key) {
-                 ary.sort(function (a, b) {
-                    let x = a[key]
-                    let y = b[key]
-                    return ((x < y) ? -1 : (x > y) ? 1 : 0)
-                })
-                // console.log("rate降序")
-                // console.log(ary)
+            selectedDate(date, dateString){
+                this.roomdate=dateString;
             },
-            sortBykeyUp(ary, key) {
-                   ary.sort(function (a, b) {
-                    let x = a[key]
-                    let y = b[key]
-                    return ((x > y) ? -1 : (x > y) ? 1 : 0)
-                })
-                // console.log("rate升序")
-                // console.log(ary)
+            //上面是获取一下选择的日期
+            onSortComment(actionProp) {
+                this.sort.comment = actionProp;
             },
-            selectedDate(date, dateString) {
-                this.roomdate = dateString;
-            },
-            onSortPop(actionProp) {//对rate排序
-                if(actionProp=='up'){
-                    this.sortBykeyUp(this.searchedHotelList,'rate')
-               }else if(actionProp=='down'){
-                    this.sortBykeyDown(this.searchedHotelList,'rate')
-               }
+            onSortPop(actionProp) {
+                this.sort.pop = actionProp;
             },
             onSortStar(actionProp) {
-                if(actionProp=='up'){
-                    this.sortBykeyUp(this.searchedHotelList,'hotelStar')
-                }else if(actionProp=='down'){
-                    this.sortBykeyDown(this.searchedHotelList,'hotelStar')
-                }
+                this.sort.star = actionProp;
             },
-            handleOrderd() {
-                this.isOrdered = true;
+            handleOrderd(){
+                this.isOrdered=true;
             },
-            handleAll() {
-                this.isOrdered = false;
+            handleAll(){
+                this.isOrdered=false;
             },
             //排序先搁置：：目前既然酒店列表仅用来显示在这里，直接改变酒店state的数据就可！！
             handleSearch(e) {
@@ -374,19 +329,20 @@
                 this.form.validateFields((error, values) => {
                     if (!error) {
                         const data = {
-                            bizId: this.form.getFieldValue('address')[2],
+                            bizId:this.form.getFieldValue('address')[2],
                             roomDemandCnt: this.form.getFieldValue('roomDemandCnt'),
-                            beginDate: this.roomdate[0],
-                            endDate: this.roomdate[1],
-                            lowerPrice: this.form.getFieldValue('lowerPrice') === "" ? null : this.form.getFieldValue('lowerPrice'),
-                            upperPrice: this.form.getFieldValue('higherPrice') === "" ? null : this.form.getFieldValue('higherPrice'),
-                            lowerRate: this.form.getFieldValue('lowerRate') === "" ? null : this.form.getFieldValue('lowerRate'),
-                            higherRate: this.form.getFieldValue('higherRate') === "" ? null : this.form.getFieldValue('higherRate'),
-                            stars: this.form.getFieldValue('checkbox-group'),
-                            hotelNameKeyWord: this.form.getFieldValue('hotelKeyWord') === "" ? null : this.form.getFieldValue('hotelKeyWord'),
-                            isOrdered: this.isOrdered,
+                            beginDate:this.roomdate[0],
+                            endDate:this.roomdate[1],
+                            lowerPrice: this.form.getFieldValue('lowerPrice')===""? null:this.form.getFieldValue('lowerPrice'),
+                            upperPrice: this.form.getFieldValue('higherPrice')===""? null: this.form.getFieldValue('higherPrice'),
+                            lowerRate:this.form.getFieldValue('lowerRate')===""?null:this.form.getFieldValue('lowerRate'),
+                            higherRate:this.form.getFieldValue('higherRate')===""?null:this.form.getFieldValue('higherRate'),
+                            stars:this.form.getFieldValue('checkbox-group'),
+                            hotelNameKeyWord: this.form.getFieldValue('hotelKeyWord')===""?null:this.form.getFieldValue('hotelKeyWord'),
+                            userId: this.userId,
+                            ordered: this.isOrdered ? 1 : 0
                         }
-                        console.log(this.form.getFieldValue('hotelKeyWord'))
+                        console.log(data)
                         this.submitHotelSearchParams(data)
                     }
 

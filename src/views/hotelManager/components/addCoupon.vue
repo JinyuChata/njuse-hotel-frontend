@@ -86,7 +86,7 @@
             <a-form-item label="优惠时间" v-bind="formItemLayout" v-if="couponType!=3" >
                 <a-range-picker @change="onChange">
                 <a-icon slot="suffixIcon" type="calendar" />
-                 </a-range-picker>
+            </a-range-picker>
             </a-form-item>
         </a-form>
     </a-modal>
