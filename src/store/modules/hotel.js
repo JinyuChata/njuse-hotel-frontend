@@ -1,10 +1,12 @@
 import { message } from 'ant-design-vue'
 import store from '@/store'
+import Vue from 'vue'
 import {
     getHotelsAPI,
     getHotelByIdAPI,
     //
-    getUserCommentAPI
+    getUserCommentAPI,
+    submitHotelSearchParamsAPI
 } from '@/api/hotel'
 import {
     reserveHotelAPI
@@ -79,7 +81,9 @@ const hotel = {
         },
         //搜索酒店后的设置
         set_searchedHotelList:function (state , data) {
-            state.searchedHotelList=data
+            // state.searchedHotelList=data
+            console.log("HHHHHH", data)
+            Vue.set(state, 'searchedHotelList', data);
         },
     //    添加用户评论
         set_userComment: function (state,data) {

@@ -9,6 +9,7 @@ const getters = {
   //为了显示出来注册组件
   hotelListLoading: state => state.hotel.hotelListLoading,
   hotelList: state => state.hotel.hotelList,
+  searchedHotelList: state => state.searchedHotelList,
   currentHotelInfo: state => state.hotel.currentHotelInfo,
   currentHotelId: state => state.hotel.currentHotelId,
   orderModalVisible: state => state.hotel.orderModalVisible,
@@ -35,6 +36,8 @@ const getters = {
   addCouponVisible: state => state.hotelManager.addCouponVisible,
   activeHotelId: state => state.hotelManager.activeHotelId,
   couponList: state => state.hotelManager.couponList,
+  manageHotelVisible: state => state.hotelManager.manageHotelVisible,
+  residences: state => state.residences,
   }
 
   export default getters
