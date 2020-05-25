@@ -4,18 +4,14 @@ import {
     updateAccountAPI,
     getUnusualOrderListAPI,
     deleteAccountAPI,
-    getClientListAPI
-} from '@/api/admin'
-import {
+    getClientListAPI,
     bindManagerAPI
-} from '@/api/hotel'
+} from '@/api/admin'
+
 import { message } from 'ant-design-vue'
 
 const admin = {
     state: {
-        unusualOrderList:[
-
-        ],
         managerList: [
 
         ],
@@ -55,9 +51,7 @@ const admin = {
                 ...data,
             }
         },
-        set_unusualOrderList: (state, data) => {
-            state.unusualOrderList = data
-        },
+
     },
     actions: {
         getManagerList: async({ commit }) => {
@@ -74,12 +68,7 @@ const admin = {
                 commit('set_clientList', res)
             }
         },
-        getUnusualOrderList: async({ commit }) => {
-            const res = await getUnusualOrderListAPI()
-            if(res){
-                commit('set_unusualOrderList', res)
-            }
-        },
+
         addManager: async({ state, commit, dispatch }) => {
             const res = await addManagerAPI(state.addManagerParams)
             if(res) {
@@ -102,21 +91,23 @@ const admin = {
                 dispatch('getManagerList')
             }
         },
-        deleteAccount: async({ state, dispatch }, data) => {
-            const res = await deleteAccountAPI(data)
+        deleteAccount: async({ state, dispatch }, id) => {
+            const res = await deleteAccountAPI(id)
             if(res){
                 message.success('删除成功')
                 dispatch('getClientList')
+                dispatch('getManagerList')
             }
         },
 
-        // bindManager: async({ state, dispatch }, id) => {
-        //     const res = await deleteAccountAPI(id)
-        //     if(res){
-        //         message.success('删除成功')
-        //         dispatch('getManagerList')
-        //     }
-        // },
+        bindManager: async({ state, dispatch }, data) => {
+
+            const res = await bindManagerAPI(data)
+            if(res){
+                message.success('绑定成功')
+                dispatch('getHotelList')
+            }
+        },
 
     }
 }

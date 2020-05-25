@@ -6,8 +6,9 @@
         okText="确定"
         @cancel="cancel"
         @ok="handleSubmit"
+        destroyOnClose="true"
     >
-    <a-Form :form="form">
+    <a-form :form="form">
         <a-form-item v-bind="formItemLayout" label="用户邮箱">
                 <a-input
                     v-decorator="[
@@ -24,7 +25,7 @@
                     ]"
                 />
             </a-form-item >
-    </a-Form>
+    </a-form>
     </a-modal>
 </template>
 <script>

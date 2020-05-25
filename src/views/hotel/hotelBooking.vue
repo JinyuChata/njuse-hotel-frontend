@@ -1,5 +1,7 @@
 <template>
+    <div class="hotelBooking">
         <search-hotel id="search-hotel"></search-hotel>
+    </div>
 </template>
 
 <script>

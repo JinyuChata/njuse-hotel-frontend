@@ -1,7 +1,6 @@
 <template>
     <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="searchedHotelList">
         <div slot="footer">from <b>NJU-SE</b> hotel search</div>
-<!--        {{searchedHotelList}}-->
         <a-list-item slot="renderItem" key="item.title" slot-scope="item">
             <template slot="actions">
               <span :key="star">
@@ -43,16 +42,6 @@
 <script>
     import {mapGetters, mapMutations, mapActions} from 'vuex'
 
-    // id: 2
-    // name: "儒家酒店"
-    // address: "南京市鼓楼区珠江路268号"
-    // biz_id: "js_nj_xinjiekou"
-    // hotelStar: "Four"
-    // rate: 4.8
-    // description: "欢迎您入住"
-    // phoneNum: "1829373819"
-    // managerId: 6
-    // rooms: null
     export default {
         computed: {
             ...mapGetters(['searchedHotelList'])

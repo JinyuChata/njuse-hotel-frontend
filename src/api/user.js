@@ -31,3 +31,17 @@ export function updateUserInfoAPI(data) {
         data
     })
 }
+
+export function investCreditAPI(data){
+    console.log(data)
+    return axios({
+        url: `${api.userPre}/${data.id}/investCredit?investedMoney=${data.investedMoney}`,
+        method: 'POST',
+    })
+}
+export function creditAPI(id){
+    return axios({
+        url: `${api.userPre}/${id}/credit`,
+        method: 'GET'
+    })
+}

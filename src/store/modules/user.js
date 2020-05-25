@@ -8,6 +8,8 @@ import {
     registerAPI,
     getUserInfoAPI,
     updateUserInfoAPI,
+    investCreditAPI,
+    creditAPI
 } from '@/api/user'
 
 import {
@@ -31,6 +33,7 @@ import {
 const user = {
     state : {
         userId: '',
+        creditInfo:[],
         userInfo: {
 
         },
@@ -82,6 +85,9 @@ const user = {
         set_userOrderList: (state, data) => {
             state.userOrderList = data
         },
+        set_creditInfo: (state, data) => {
+            state.creditInfo = data
+        },
     },
 
     actions: {
@@ -91,6 +97,10 @@ const user = {
                 setToken(res.id)
                 commit('set_userId', res.id)
                 dispatch('getUserInfo')
+                if(res.id==12){
+                    router.push('/admin/manageUser')
+                }
+                else
                 router.push('/hotel/hotelList')
             }
         },
@@ -136,6 +146,16 @@ const user = {
                 console.log(state.userOrderList)
             }
         },
+        getCreditInfo: async({ state, commit }) => {
+            const data = {
+                userId: Number(state.userId)
+            }
+            const res = await creditAPI(data.userId)
+            if(res){
+                console.log(res)
+                commit('set_creditInfo', res)
+            }
+        },
 
         cancelOrder: async({ state, dispatch }, orderId) => {
             const res = await cancelOrderAPI(orderId)
@@ -158,6 +178,15 @@ const user = {
                 commit('reset_state')
                 resolve()
             })
+        },
+        investCredit: async({ state, dispatch }, data) => {
+            const res = await investCreditAPI(data)
+            if(res) {
+                dispatch('getCreditInfo')
+                message.success('充值成功')
+            }else{
+                message.error('充值失败')
+            }
         },
     }
 }

@@ -1,11 +1,12 @@
 import { message } from 'ant-design-vue'
 import store from '@/store'
+import Vue from 'vue'
 import {
     getHotelsAPI,
     getHotelByIdAPI,
-    submitHotelSearchParamsAPI,
     //
-    getUserCommentAPI
+    getUserCommentAPI,
+    submitHotelSearchParamsAPI
 } from '@/api/hotel'
 import {
     reserveHotelAPI
@@ -16,6 +17,7 @@ import {
 
 const hotel = {
     state: {
+
         hotelList: [
 
         ],
@@ -32,7 +34,6 @@ const hotel = {
         currentOrderRoom: {
 
         },
-
         orderMatchCouponList: [
         ],
         //下面三个是酒店列表使用的
@@ -80,7 +81,9 @@ const hotel = {
         },
         //搜索酒店后的设置
         set_searchedHotelList:function (state , data) {
-            state.searchedHotelList=data
+            // state.searchedHotelList=data
+            console.log("HHHHHH", data)
+            Vue.set(state, 'searchedHotelList', data);
         },
     //    添加用户评论
         set_userComment: function (state,data) {
@@ -91,6 +94,7 @@ const hotel = {
     actions: {
         getHotelList: async({commit, state}) => {
             const res = await getHotelsAPI()
+            console.log(res)
             if(res){
                 commit('set_hotelList', res)
                 commit('set_hotelListLoading', false)
@@ -116,7 +120,7 @@ const hotel = {
 
         addOrder: async({ state, commit }, data) => {
             const res = await reserveHotelAPI(data)
-            // console.log(res)
+            console.log(res)
             if(res){
                 message.success('预定成功')
                 commit('set_orderModalVisible', false)

@@ -33,3 +33,23 @@ export function deleteOrderAPI(id) {
         method: 'POST',
     })
 }
+export function checkInAPI(id) {
+    return axios({
+        url: `${api.orderPre}/${id}/checkin`,
+        method: 'GET',
+    })
+}
+export function checkOutAPI(id) {
+    return axios({
+        url: `${api.orderPre}/${id}/checkout`,
+        method: 'GET',
+    })
+}
+
+export function abnormalOrdersOfTheDayAPI(hotelId) {
+    console.log(hotelId)
+    return axios({
+        url: `${api.orderPre}/${hotelId}/abnormalOrdersOfTheDay`,
+        method: 'GET',
+    })
+}
