@@ -4,7 +4,7 @@ import {
     getHotelsAPI,
     getHotelByIdAPI,
     //
-    // getUserCommentAPI
+    getUserCommentAPI
 } from '@/api/hotel'
 import {
     reserveHotelAPI
@@ -34,6 +34,12 @@ const hotel = {
         },
         orderMatchCouponList: [
         ],
+        //下面三个是酒店列表使用的
+        searchedHotelList:[
+        ],
+        userComment:[
+        ],
+      //暂且先扔到这里，设置酒店位置也要用
         // //添加用户评论！！！
         // userComment:[],
     },
@@ -71,10 +77,14 @@ const hotel = {
         set_orderMatchCouponList: function(state, data) {
             state.orderMatchCouponList = data
         },
+        //搜索酒店后的设置
+        set_searchedHotelList:function (state , data) {
+            state.searchedHotelList=data
+        },
     //    添加用户评论
-    //     set_userComment: function (state,data) {
-    //         state.userComment=data.data;
-    //     }
+        set_userComment: function (state,data) {
+            state.userComment=data;
+        }
     },
 
     actions: {
@@ -94,15 +104,16 @@ const hotel = {
                 commit('set_currentHotelInfo', res)
             }
         },
-        //添加用户评论
-        // getUserComment: async({commit, state}) => {
-        //     const res = await getUserCommentAPI();
-        //     console.log(res)
-        //     if(res){
-        //         commit('set_userComment', res)
-        //     }
-        // },
-        //
+        // 添加用户评论
+        getUserComment: async({commit, state},id) => {
+            // console.log('发出了请求')
+            const res = await getUserCommentAPI(id);
+            // console.log(res)
+            if(res){
+                commit('set_userComment', res)
+            }
+        },
+
         addOrder: async({ state, commit }, data) => {
             const res = await reserveHotelAPI(data)
             console.log(res)
@@ -117,6 +128,18 @@ const hotel = {
                 commit('set_orderMatchCouponList', res)
             }
         },
+        submitHotelSearchParams:async({ state, commit }, data) =>{
+            const res=await submitHotelSearchParamsAPI(data)
+            if(res){
+                console.log("res::::::")
+                console.log(res)
+                commit('set_searchedHotelList',res)
+            }else {
+                console.log("搜索失败")
+            //    错误信息以后再说
+            }
+        }
+
         // bindManager: async({ state, commit }, data) => {
         //     const res = await orderMatchCouponsAPI(data)
         //     if(res){
