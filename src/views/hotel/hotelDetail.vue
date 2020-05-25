@@ -78,6 +78,8 @@ export default {
     mounted() {
         this.set_currentHotelId(Number(this.$route.params.hotelId))
         this.getHotelById()
+        this.getUserComment(Number(this.$route.params.hotelId))
+
     },
     beforeRouteUpdate(to, from, next) {
         this.set_currentHotelId(Number(to.params.hotelId))
@@ -89,7 +91,8 @@ export default {
             'set_currentHotelId',
         ]),
         ...mapActions([
-            'getHotelById'
+            'getHotelById',
+            'getUserComment'
         ])
     }
 }
