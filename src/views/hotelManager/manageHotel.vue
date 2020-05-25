@@ -1,8 +1,7 @@
 <template>
-    <div class="manageHotel-wrapper">
-        <a-tabs>
+    <div class="manageHotel-wrapper" >
+        <a-tabs >
             <a-tab-pane tab="酒店管理" key="1">
-
                 <div style="width: 100%; text-align: right; margin:20px 0">
                     <a-button type="primary" @click="addHotel">
                         <a-icon type="plus"/>
@@ -18,8 +17,7 @@
                     <span slot="action" slot-scope="record">
                         <a-button type="primary" size="small" @click="showDrawer(record.id)">今日异常</a-button>
                         <a-divider type="vertical"></a-divider>
-
-                        <a-button type="primary" size="small" @click="addRoom(record)">录入房间</a-button>
+                        <a-button type="primary" size="small" @click="manageRoom(record)">房间管理</a-button>
                         <a-divider type="vertical"></a-divider>
                         <a-button type="info" size="small" @click="showCoupon(record)">优惠策略</a-button>
                         <a-divider type="vertical"></a-divider>
@@ -78,8 +76,8 @@
 </template>
 <script>
     import {mapGetters, mapMutations, mapActions} from 'vuex'
-    import AddHotelModal from './components/addHotelModal'
-    import AddRoomModal from './components/addRoomModal'
+    import AddHotelModal from './components/roomManageModal'
+    import AddRoomModal from './components/roomManageModal'
     import Coupon from './components/coupon'
     import unusualOrder from "./components/unusualOrder";
 
@@ -226,7 +224,7 @@
             addHotel() {
                 this.set_addHotelModalVisible(true)
             },
-            addRoom(record) {
+            manageRoom(record) {
                 this.set_activeHotelId(record.id)
                 this.set_addRoomModalVisible(true)
             },

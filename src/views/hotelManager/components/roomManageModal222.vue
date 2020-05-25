@@ -1,7 +1,8 @@
 <template>
+<!--    :visible="addRoomModalVisible"-->
     <a-modal
-        :visible="addRoomModalVisible"
-        title="录入客房"
+        :visible="true"
+        title="客房管理"
         cancelText="取消"
         okText="确定"
         @cancel="cancel"
