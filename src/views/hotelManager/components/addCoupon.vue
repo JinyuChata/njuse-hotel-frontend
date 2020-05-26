@@ -52,7 +52,7 @@
             </div>
             <div v-if="couponType==4 || couponType==5">
                 <a-collapse accordion default-active-key="1" :bordered="false">
-                    <a-collapse-panel key="1" header="使用满减优惠" class="collapse">
+                    <a-collapse-panel key="1" header="使用满减优惠" class="collapse" @click.native="resetDicount">
                         <a-form-item label="达标金额">
                             <a-input
                                     placeholder="请填写达标金额"
@@ -66,7 +66,7 @@
                             />
                         </a-form-item>
                     </a-collapse-panel>
-                    <a-collapse-panel key="2" header="使用折扣优惠" :disabled="false"  class="collapse">
+                    <a-collapse-panel key="2" header="使用折扣优惠" :disabled="false"  class="collapse" @click.native="resetTargetMoney">
                         <a-form-item label="折扣力度" v-bind="formItemLayout">
                             <a-input
                                     placeholder="请填写折扣大小"
@@ -140,6 +140,13 @@
                 //actions this.$store.dispatch(xxx)    mapActions
                 'addHotelCoupon'
             ]),
+            resetDicount(){
+                this.form.resetFields(`discount`,'')
+            },
+            resetTargetMoney(){
+                this.form.resetFields(`targetMoney`,'')
+                this.form.resetFields(`discountMoney`,'')
+            },
             cancel() {
                 this.set_addCouponVisible(false)
             },

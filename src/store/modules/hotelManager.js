@@ -12,8 +12,8 @@ import {
     deleteOrderAPI,
     checkInAPI,
     checkOutAPI,
-    abnormalOrdersOfTheDayAPI
-    deleteOrderAPI
+    abnormalOrdersOfTheDayAPI,
+
 } from '@/api/order'
 import {
     hotelAllCouponsAPI,
@@ -28,16 +28,16 @@ const hotelManager = {
         managedOrders:[],
         mgrHotelList:[],
         orderList: [],
-        addHotelParams: {
-            name: '',
-            address: '',
-            bizRegion:'XiDan',
-            hotelStar:'',
-            rate: 0,
-            description:'',
-            phoneNum:'',
-            managerId:'',
-        },
+        // addHotelParams: {
+        //     name: '',
+        //     address: '',
+        //     bizRegion:'XiDan',
+        //     hotelStar:'',
+        //     rate: 0,
+        //     description:'',
+        //     phoneNum:'',
+        //     managerId:'',
+        // },
         addHotelModalVisible: false,
         addRoomParams: {
             roomType: '',
@@ -120,20 +120,20 @@ const hotelManager = {
                 commit('set_unusualOrderList', res)
             }
         },
-        addHotel: async({ state, dispatch, commit }) => {
-            const res = await addHotelAPI(state.addHotelParams)
+        addHotel: async({ state, commit,dispatch},data) => {
+            const res = await addHotelAPI(data)
             if(res){
                 dispatch('getHotelList')
-                commit('set_addHotelParams', {
-                    name: '',
-                    address: '',
-                    bizRegion:'XiDan',
-                    hotelStar:'',
-                    rate: 0,
-                    description:'',
-                    phoneNum:'',
-                    managerId:'',
-                })
+                // commit('set_addHotelParams', {
+                //     name: '',
+                //     address: '',
+                //     bizRegion:'XiDan',
+                //     hotelStar:'',
+                //     rate: 0,
+                //     description:'',
+                //     phoneNum:'',
+                //     managerId:'',
+                // })
                 commit('set_addHotelModalVisible', false)
                 message.success('添加成功')
             }else{
@@ -213,15 +213,20 @@ const hotelManager = {
         },
         checkIn:async({ state, dispatch }, id) => {
             const res = await checkInAPI(id)
-            if(res){
+            if (res) {
                 message.success('入住成功')
                 dispatch('getManageOrders')
+            }
+        },
         //提交酒店维护信息
         submitManageHotelParams:async({ commit, dispatch }, data) => {
-            console.log(data)
+
             const res = await submitManageHotelParamsAPI(data)
+            // console.log('修改失败')
+            // console.log(res)
             if(res){//我很好奇请求成功以后会发什么回来？
                 dispatch('getMgrHotelList')//应该是获取所有的酒店
+                console.log('执行了这部分')
                 commit('set_manageHotelVisible', false);
                 message.success('修改成功')
             }else {
@@ -234,7 +239,7 @@ const hotelManager = {
                 message.success('退房成功')
                 dispatch('getManageOrders')
             }
-        },
+        }
     }
-};
+}
 export default hotelManager

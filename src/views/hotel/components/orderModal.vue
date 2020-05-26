@@ -6,6 +6,7 @@
             okText="下单"
             @cancel="cancelOrder"
             @ok="handleSubmit"
+
     >
         <a-form :form="form">
             <a-form-item v-bind="formItemLayout" label="房型信息">
@@ -110,8 +111,8 @@
                         <a-radio-group v-model="selectedCouponid" @change="onchange">
                             <a-table
                                     :columns="columns"
-                                    :dataSource="orderMatchCouponList"
-                                    :showHeader="false"
+                                    :dataSource="displayedOrderMatchCouponList"
+                                    :showHeader="true"
                                     bordered
                                     v-if="orderMatchCouponList.length>0"
                             >
@@ -127,7 +128,7 @@
                     </a-collapse-panel>
                 </a-collapse>
             </div>
-            {{selectedCoupon}}
+<!--            {{selectedCoupon}}-->
 <!--            {{selectedCoupon[0].couponType}}-->
              <a-form-item v-bind="formItemLayout" label="结算后总价">
                 <span>￥{{ finalPrice }}</span>
@@ -140,7 +141,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 const moment = require('moment')
 const columns = [
     {  
-        title: '勾选',
+        title: '选择',
         dataIndex: 'id',
         scopedSlots: {customRender: 'id'}
     },
@@ -172,10 +173,14 @@ export default {
                 labelCol: {
                     xs: { span: 12 },
                     sm: { span: 6 },
+                    // xs: { span: 12 },
+                    // sm: { span: 6 },
                 },
                 wrapperCol: {
                     xs: { span: 24 },
                     sm: { span: 16 },
+                    // xs: { span: 24 },
+                    // sm: { span: 16 },
                 },
             },
             totalPrice: '',
@@ -218,6 +223,20 @@ export default {
             'userId',
             'orderMatchCouponList'
         ]),
+        displayedOrderMatchCouponList(){
+           let displaylist=this.orderMatchCouponList;
+           // console.log(displaylist);
+            displaylist.forEach((item)=>{
+                if(item.discount<=0){
+                    item.discount='无折扣';
+                }
+                if(item.targetMoney<=0){
+                    item.targetMoney='无';
+                    item.discountMoney= '无';
+                }
+            })
+            return displaylist
+        }
 
     },
     beforeCreate() {

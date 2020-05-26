@@ -24,6 +24,8 @@
                         <a-divider type="vertical"></a-divider>
                         <a-button type="info" size="small" @click="showCoupon(record)">优惠策略</a-button>
                         <a-divider type="vertical"></a-divider>
+                        <a type="info" size="small" @click="manageHotel(record)">维护</a>
+                        <a-divider type="vertical"></a-divider>
                         <a-popconfirm
                                 title="确定想删除该酒店吗？"
                                 @confirm="deleteHotel(record)"
@@ -69,79 +71,31 @@
                     </span>
                 </a-table>
             </a-tab-pane>
-<!--            <a-tab-pane tab="维护酒店基本信息">-->
-<!--                <a-form>-->
-<!--                    <a-form-item label="酒店名称" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">-->
-<!--                        <span> 酒店名称的数据 不可改</span>-->
-<!--                    </a-form-item>-->
-<!--                    <a-form-item label="酒店地址" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">-->
-<!--                        <a-input-->
-<!--                                placeholder="请填写酒店地址"-->
-<!--                                v-decorator="['address' ]"-->
-<!--                                v-if="true"-->
-<!--                        />-->
-<!--                        <span v-else>-->
-<!--                            {{}}-->
-<!--                        </span>-->
-<!--                    </a-form-item>-->
-<!--                    <a-form-item label="所属商圈" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">-->
-<!--                        <a-input-->
-<!--                                placeholder="请填写酒店所属商圈"-->
-<!--                                v-decorator="['' ]"-->
-<!--                                v-if="true"-->
-<!--                        />-->
-<!--                        <span v-else>-->
-<!--                            {{}}-->
-<!--                        </span>-->
-<!--                    </a-form-item>-->
-<!--                    <a-form-item label="酒店星级" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">-->
-<!--                        <a-input-->
-<!--                                placeholder="请填写酒店地址"-->
-<!--                                v-decorator="['address' ]"-->
-<!--                                v-if="true"-->
-<!--                        />-->
-<!--                        <span v-else>-->
-<!--                            {{}}-->
-<!--                        </span>-->
-<!--                    </a-form-item>-->
-<!--                    <a-form-item label="酒店评分" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">-->
-<!--                        <span>酒店评分的数据 不可改</span>-->
-<!--                    </a-form-item>-->
-<!--                    <a-form-item label="酒店电话" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">-->
-<!--                        <a-input-->
-<!--                                placeholder="请填写酒店地址"-->
-<!--                                v-decorator="['address' ]"-->
-<!--                                v-if="true"-->
-<!--                        />-->
-<!--                        <span v-else>-->
-<!--                            {{}}-->
-<!--                        </span>-->
-<!--                    </a-form-item>-->
-<!--                    <a-form-item label="酒店描述" :label-col="{ span: 3,offset:5 }" :wrapper-col="{ span: 8, offset: 1  }">-->
-<!--                        <a-textarea-->
-<!--                                placeholder="请填写酒店描述"-->
-<!--                                v-decorator="['address' ]"-->
-<!--                                v-if="true"-->
-<!--                        />-->
-<!--                        <span v-else>-->
-<!--                            {{}}-->
-<!--                        </span>-->
-<!--                    </a-form-item>-->
-<!--                </a-form>-->
-<!--            </a-tab-pane>-->
+
         </a-tabs>
         <AddHotelModal></AddHotelModal>
         <AddRoomModal></AddRoomModal>
         <Coupon></Coupon>
         <unusualOrder :hotelId="id" ></unusualOrder>
+        <ManageHotelModal :record="clickedRecord"></ManageHotelModal>
     </div>
 </template>
+<!--private Integer id;-->
+<!--private String name;-->
+<!--private String address;-->
+<!--private String biz_id;-->
+<!--private String hotelStar;-->
+<!--private Double rate;-->
+<!--private String description;-->
+<!--private String phoneNum;-->
+<!--private Integer managerId;-->
 <script>
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import AddHotelModal from './components/addHotelModal'
     import AddRoomModal from './components/addRoomModal'
     import Coupon from './components/coupon'
     import unusualOrder from "./components/unusualOrder";
+    import ManageHotelModal from "./components/manageHotelModal";
 
     const moment = require('moment')
     const columns1 = [
@@ -229,13 +183,15 @@
                 columns2,
                 visible: false,
                 form: this.$form.createForm(this, {name: 'manageHotel'}),
+                clickedRecord:{}
             }
         },
         components: {
             AddHotelModal,
             AddRoomModal,
             Coupon,
-            unusualOrder
+            unusualOrder,
+            ManageHotelModal
         },
         computed: {
             ...mapGetters([
@@ -248,7 +204,8 @@
                 'addRoomModalVisible',
                 'activeHotelId',
                 'couponVisible',
-                'unusualOrderVisible'
+                'unusualOrderVisible',
+                'currentHotelInfo'
             ]),
         },
         async mounted() {
@@ -262,7 +219,8 @@
                 'set_addRoomModalVisible',
                 'set_couponVisible',
                 'set_activeHotelId',
-                'set_unusualOrderVisible'
+                'set_unusualOrderVisible',
+                'set_manageHotelVisible'
             ]),
             ...mapActions([
                 'getMgrHotelList',
@@ -270,6 +228,7 @@
                 'getHotelCoupon',
                 'deleteOrder',
                 'getManagedOrders',
+                'getHotelById',
                 'checkIn',
                 'checkOut',
                 'getUnusualOrderList'
