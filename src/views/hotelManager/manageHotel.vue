@@ -11,15 +11,15 @@
                                 添加酒店
                             </a-button>
                         </div>
-                        <a-table
+<!--&lt;!&ndash;                        <a-table&ndash;&gt;-->
 
-                <div style="width: 100%; text-align: right; margin:20px 0">
-                    <a-button type="primary" @click="addHotel">
-                        <a-icon type="plus"/>
-                        添加酒店
-                    </a-button>
-                    <!--                    <div>{{userId}}</div>-->
-                </div>
+<!--                <div style="width: 100%; text-align: right; margin:20px 0">-->
+<!--                    <a-button type="primary" @click="addHotel">-->
+<!--                        <a-icon type="plus"/>-->
+<!--                        添加酒店-->
+<!--                    </a-button>-->
+<!--                    &lt;!&ndash;                    <div>{{userId}}</div>&ndash;&gt;-->
+<!--                </div>-->
                 <a-table
 
                         :columns="columns1"
@@ -44,7 +44,7 @@
                             <a-button type="danger" size="small">删除酒店</a-button>
                         </a-popconfirm>
                     </span>
-                        </a-table>
+                </a-table>
                     </div>
                 </transition>
                 <room-manage-panel></room-manage-panel>
