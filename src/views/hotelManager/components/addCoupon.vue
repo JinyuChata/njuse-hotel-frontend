@@ -172,7 +172,8 @@
                             endDate:this.hasCouponTime?this.couponTime[1]:null,
                             // couponTime: this.hasCouponTime?this.couponTime:[],
                         };
-                        console.log(data)
+                        // console.log('YOUHUIJIAN')
+                        // console.log(data)
                         this.addHotelCoupon(data);
                     }
                 });

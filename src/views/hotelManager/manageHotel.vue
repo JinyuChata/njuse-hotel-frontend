@@ -1,5 +1,6 @@
 <template>
     <div class="manageHotel-wrapper" >
+<!--        {{mgrHotelList}}-->
         <a-tabs >
             <a-tab-pane tab="酒店管理" key="1">
                 <transition enter-active-class="animate__animated animated__fadeInRight"
@@ -44,10 +45,7 @@
                             <a-button type="danger" size="small">删除酒店</a-button>
                         </a-popconfirm>
                     </span>
-                    
-                    </div>
-                </transition>
-                <room-manage-panel></room-manage-panel>
+                </a-table>
                     </div>
                 </transition>
                 <room-manage-panel></room-manage-panel>

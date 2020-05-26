@@ -177,8 +177,10 @@ const hotelManager = {
             if(data.type==3){
                  res= await hotelTargetMoneyAPI(data);
             }else if(data.type==4){
+                // console.log('zhiixingl')
                  res= await hotelFestivalAPI(data);
             }else {
+                // console.log('zhiixingl')
                  res= await hotelFestivalAPI(data);
             }
             if(res){
