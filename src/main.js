@@ -7,6 +7,7 @@ import store from './store'
 
 //permission还没弄懂
 import '@/permission'
+import animated from 'animate.css'
 
 Vue.config.productionTip = false;
 const options = {
@@ -15,6 +16,7 @@ const options = {
     storage: 'local'
 };
 Vue.use(Antd);
+Vue.use(animated);
 //是一个自定义组件叫title
 Vue.directive('title', {
     inserted: function (el, binding) {

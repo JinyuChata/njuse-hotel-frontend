@@ -8,7 +8,6 @@
             </span>
         </a-table>
     </div>
-
 </template>
 <script>
     const columns = [

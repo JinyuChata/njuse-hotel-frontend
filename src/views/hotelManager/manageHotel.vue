@@ -2,18 +2,20 @@
     <div class="manageHotel-wrapper" >
         <a-tabs >
             <a-tab-pane tab="酒店管理" key="1">
-                <div style="width: 100%; text-align: right; margin:20px 0">
-                    <a-button type="primary" @click="addHotel">
-                        <a-icon type="plus"/>
-                        添加酒店
-                    </a-button>
-                    <!--                    <div>{{userId}}</div>-->
-                </div>
-                <a-table
+                <transition enter-active-class="animate__animated animated__fadeInRight"
+                            leave-active-class=" animate__animated animated__fadeOutLeft">
+                    <div v-if="!addRoomModalVisible">
+                        <div style="width: 100%; text-align: right; margin:20px 0">
+                            <a-button type="primary" @click="addHotel">
+                                <a-icon type="plus"/>
+                                添加酒店
+                            </a-button>
+                        </div>
+                        <a-table
 
-                        :columns="columns1"
-                        :dataSource="mgrHotelList"
-                >
+                                :columns="columns1"
+                                :dataSource="mgrHotelList"
+                        >
                     <span slot="action" slot-scope="record">
                         <a-button type="primary" size="small" @click="showDrawer(record.id)">今日异常</a-button>
                         <a-divider type="vertical"></a-divider>
@@ -30,7 +32,10 @@
                             <a-button type="danger" size="small">删除酒店</a-button>
                         </a-popconfirm>
                     </span>
-                </a-table>
+                        </a-table>
+                    </div>
+                </transition>
+                <room-manage-panel></room-manage-panel>
             </a-tab-pane>
             <a-tab-pane tab="订单管理" key="2">
                 <a-table
@@ -66,18 +71,16 @@
                     </span>
                 </a-table>
             </a-tab-pane>
-
         </a-tabs>
         <AddHotelModal></AddHotelModal>
-        <AddRoomModal></AddRoomModal>
         <Coupon></Coupon>
         <unusualOrder :hotelId="id" ></unusualOrder>
     </div>
 </template>
 <script>
     import {mapGetters, mapMutations, mapActions} from 'vuex'
-    import AddHotelModal from './components/roomManageModal'
-    import AddRoomModal from './components/roomManageModal'
+    import AddHotelModal from './components/addHotelModal'
+    import RoomManagePanel from './components/roomManagePanel'
     import Coupon from './components/coupon'
     import unusualOrder from "./components/unusualOrder";
 
@@ -158,7 +161,6 @@
     export default {
         name: 'manageHotel',
         data() {
-
             return {
                 id:'',
                 formLayout: 'horizontal',
@@ -171,7 +173,7 @@
         },
         components: {
             AddHotelModal,
-            AddRoomModal,
+            RoomManagePanel,
             Coupon,
             unusualOrder
         },
@@ -186,8 +188,8 @@
                 'addRoomModalVisible',
                 'activeHotelId',
                 'couponVisible',
-                'unusualOrderVisible'
-            ]),
+                'unusualOrderVisible',
+            ])
         },
         async mounted() {
             await this.getMgrHotelList(this.userId)
@@ -199,7 +201,8 @@
                 'set_addRoomModalVisible',
                 'set_couponVisible',
                 'set_activeHotelId',
-                'set_unusualOrderVisible'
+                'set_unusualOrderVisible',
+                'set_manageHotelVisible'
             ]),
             ...mapActions([
                 'getMgrHotelList',
@@ -227,6 +230,7 @@
             manageRoom(record) {
                 this.set_activeHotelId(record.id)
                 this.set_addRoomModalVisible(true)
+                this.set_manageHotelVisible(false)
             },
             showCoupon(record) {
                 this.set_activeHotelId(record.id)
@@ -261,6 +265,5 @@
         }
     }
 </style>
-<style lang="less">
-
+<style>
 </style>

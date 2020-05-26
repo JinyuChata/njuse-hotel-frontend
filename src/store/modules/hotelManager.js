@@ -36,6 +36,7 @@ const hotelManager = {
             managerId:'',
         },
         addHotelModalVisible: false,
+        manageRoomVisible: true,
         addRoomParams: {
             roomType: '',
             hotelId: '',
@@ -62,6 +63,10 @@ const hotelManager = {
         },
         set_addHotelModalVisible: function(state, data) {
             state.addHotelModalVisible = data
+            console.log("Visible")
+        },
+        set_manageRoomVisible: function(state, data) {
+            state.manageRoomVisible = data
         },
         set_unusualOrderVisible: function(state, data) {
             state.unusualOrderVisible = data
