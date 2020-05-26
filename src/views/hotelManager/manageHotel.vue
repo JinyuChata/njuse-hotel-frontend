@@ -1,7 +1,17 @@
 <template>
-    <div class="manageHotel-wrapper">
-        <a-tabs>
+    <div class="manageHotel-wrapper" >
+        <a-tabs >
             <a-tab-pane tab="酒店管理" key="1">
+                <transition enter-active-class="animate__animated animated__fadeInRight"
+                            leave-active-class=" animate__animated animated__fadeOutLeft">
+                    <div v-if="!addRoomModalVisible">
+                        <div style="width: 100%; text-align: right; margin:20px 0">
+                            <a-button type="primary" @click="addHotel">
+                                <a-icon type="plus"/>
+                                添加酒店
+                            </a-button>
+                        </div>
+                        <a-table
 
                 <div style="width: 100%; text-align: right; margin:20px 0">
                     <a-button type="primary" @click="addHotel">
@@ -19,8 +29,7 @@
                     <span slot="action" slot-scope="record">
                         <a-button type="primary" size="small" @click="showDrawer(record.id)">今日异常</a-button>
                         <a-divider type="vertical"></a-divider>
-
-                        <a-button type="primary" size="small" @click="addRoom(record)">录入房间</a-button>
+                        <a-button type="primary" size="small" @click="manageRoom(record)">房间管理</a-button>
                         <a-divider type="vertical"></a-divider>
                         <a-button type="info" size="small" @click="showCoupon(record)">优惠策略</a-button>
                         <a-divider type="vertical"></a-divider>
@@ -35,7 +44,10 @@
                             <a-button type="danger" size="small">删除酒店</a-button>
                         </a-popconfirm>
                     </span>
-                </a-table>
+                        </a-table>
+                    </div>
+                </transition>
+                <room-manage-panel></room-manage-panel>
             </a-tab-pane>
             <a-tab-pane tab="订单管理" key="2">
                 <a-table
@@ -71,10 +83,8 @@
                     </span>
                 </a-table>
             </a-tab-pane>
-
         </a-tabs>
         <AddHotelModal></AddHotelModal>
-        <AddRoomModal></AddRoomModal>
         <Coupon></Coupon>
         <unusualOrder :hotelId="id" ></unusualOrder>
         <ManageHotelModal :record="clickedRecord"></ManageHotelModal>
@@ -92,7 +102,7 @@
 <script>
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import AddHotelModal from './components/addHotelModal'
-    import AddRoomModal from './components/addRoomModal'
+    import RoomManagePanel from './components/roomManagePanel'
     import Coupon from './components/coupon'
     import unusualOrder from "./components/unusualOrder";
     import ManageHotelModal from "./components/manageHotelModal";
@@ -188,7 +198,7 @@
         },
         components: {
             AddHotelModal,
-            AddRoomModal,
+            RoomManagePanel,
             Coupon,
             unusualOrder,
             ManageHotelModal
@@ -246,9 +256,10 @@
             addHotel() {
                 this.set_addHotelModalVisible(true)
             },
-            addRoom(record) {
+            manageRoom(record) {
                 this.set_activeHotelId(record.id)
                 this.set_addRoomModalVisible(true)
+                this.set_manageHotelVisible(false)
             },
             showCoupon(record) {
                 this.set_activeHotelId(record.id)
@@ -289,6 +300,5 @@
         }
     }
 </style>
-<style lang="less">
-
+<style>
 </style>

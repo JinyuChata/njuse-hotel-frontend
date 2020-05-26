@@ -44,7 +44,7 @@
                 <a-col :span="8"
                        :style="{ display: 0 < count ? 'block' : 'none'}"
                 >
-                    <a-form-item label="入住时间" v-bind="formItemLayout" style="margin-left: 0; margin-right: 5px">
+                    <a-form-item label="入住时间" style="margin-left: 0; margin-right: 5px">
                         <a-range-picker @change="selectedDate"
                                         v-decorator="[
                           'roomdate',

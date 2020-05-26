@@ -36,7 +36,7 @@ const getters = {
   addCouponVisible: state => state.hotelManager.addCouponVisible,
   activeHotelId: state => state.hotelManager.activeHotelId,
   couponList: state => state.hotelManager.couponList,
-  manageHotelVisible: state => state.hotelManager.manageHotelVisible,
+  manageRoomVisible: state => state.hotelManager.manageRoomVisible,
   residences: state => state.residences,
   }
 

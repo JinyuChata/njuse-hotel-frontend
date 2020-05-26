@@ -3,15 +3,15 @@
         <div slot="footer">from <b>NJU-SE</b> hotel search</div>
         <a-list-item slot="renderItem" key="item.title" slot-scope="item">
             <template slot="actions">
-              <span :key="star">
+              <span>
                         <a-icon type="star" style="margin-right: 8px"/>
                       {{ item.hotelStar }}
                     </span>
-                <span :key="like-o">
+                <span>
                       <a-icon type="like-o" style="margin-right: 8px"/>
                       {{ item.rate }}
                     </span>
-                <span :key="tag" v-if="item.isOrdered">
+                <span v-if="item.isOrdered">
                       <a-icon type="tag" style="margin-right: 8px"/>
                        "曾经预定过"
                 </span>
@@ -26,8 +26,6 @@
                     alt="logo"
                 src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
             />
-            <!--                 先顶一下   :src="item.hotelPic"-->
-            <!--            先限制一下，等到之后再处理拉伸变形问题-->
             <a-list-item-meta :description="item.address"  >
                 <a slot="title" @click="jumpToDetails(item.id)">{{ item.name }}</a>
                 <a-button shape="circle" icon="search" slot="title" type="dashed"  @click.native="jumpToDetails(item.id)" style="margin-left: 12px">
@@ -35,7 +33,6 @@
                 <!--                <a-avatar slot="avatar" :src="item.avatar"/>-->
             </a-list-item-meta>
             {{ item.description }}
-            <!--            <h4 >{{item.lowestprice}}</h4>-->
         </a-list-item>
     </a-list>
 </template>
