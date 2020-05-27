@@ -1,16 +1,20 @@
 <template>
-    <transition enter-active-class="animate__animated animated__fadeInRight"
-                leave-active-class="animate__animated animated__fadeOutLeft">
-        <div v-if="addRoomModalVisible">
-            <a-form :form="form" style="margin-top: 30px" v-bind="formItemLayout">
-                <div style="width: 100%; text-align: left; margin:20px 0">
-                    <a-button type="primary" shape="round" icon="left" @click="onOk">
+    <div v-if="addRoomModalVisible">
+        <a-form :form="form" style="margin-top: 30px" v-bind="formItemLayout">
+            <div style="width: 100%; text-align: left; margin:20px 0">
+                <span>
+                    <a-button type="primary" shape="round" icon="left" @click="onOk"></a-button>
+                </span>
+                <span style="float: right">
+                    <a-button type="primary" @click="addRoomType">
+                        <a-icon type="plus"/>
+                        添加房型
                     </a-button>
-                </div>
-                <managed-room-list/>
-            </a-form>
-        </div>
-    </transition>
+                </span>
+            </div>
+            <managed-room-list/>
+        </a-form>
+    </div>
 </template>
 <script>
     import {mapGetters, mapMutations, mapActions} from 'vuex'
@@ -63,6 +67,9 @@
             },
             onOk() {
                 this.set_addRoomModalVisible(false)
+            },
+            addRoomType() {
+                // TODO: 添加房型
             }
         }
     }

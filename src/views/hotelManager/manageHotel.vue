@@ -3,8 +3,7 @@
 <!--        {{mgrHotelList}}-->
         <a-tabs >
             <a-tab-pane tab="酒店管理" key="1">
-                <transition enter-active-class="animate__animated animated__fadeInRight"
-                            leave-active-class=" animate__animated animated__fadeOutLeft">
+                <transition name="fade-transform" mode="out-in">
                     <div v-if="!addRoomModalVisible">
                         <div style="width: 100%; text-align: right; margin:20px 0">
                             <a-button type="primary" @click="addHotel">
@@ -12,15 +11,6 @@
                                 添加酒店
                             </a-button>
                         </div>
-<!--&lt;!&ndash;                        <a-table&ndash;&gt;-->
-
-<!--                <div style="width: 100%; text-align: right; margin:20px 0">-->
-<!--                    <a-button type="primary" @click="addHotel">-->
-<!--                        <a-icon type="plus"/>-->
-<!--                        添加酒店-->
-<!--                    </a-button>-->
-<!--                    &lt;!&ndash;                    <div>{{userId}}</div>&ndash;&gt;-->
-<!--                </div>-->
                 <a-table
 
                         :columns="columns1"
@@ -47,8 +37,8 @@
                     </span>
                 </a-table>
                     </div>
+                    <room-manage-panel></room-manage-panel>
                 </transition>
-                <room-manage-panel></room-manage-panel>
             </a-tab-pane>
             <a-tab-pane tab="订单管理" key="2">
                 <a-table
@@ -91,15 +81,6 @@
         <ManageHotelModal :record="clickedRecord"></ManageHotelModal>
     </div>
 </template>
-<!--private Integer id;-->
-<!--private String name;-->
-<!--private String address;-->
-<!--private String biz_id;-->
-<!--private String hotelStar;-->
-<!--private Double rate;-->
-<!--private String description;-->
-<!--private String phoneNum;-->
-<!--private Integer managerId;-->
 <script>
     import {mapGetters, mapMutations, mapActions} from 'vuex'
     import AddHotelModal from './components/addHotelModal'
